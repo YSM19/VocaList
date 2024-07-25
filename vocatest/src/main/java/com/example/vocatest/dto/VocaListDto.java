@@ -1,0 +1,16 @@
+package com.example.vocatest.dto;
+
+import com.example.vocatest.entity.VocaListEntity;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class VocaListDto { 
+    private String author;
+    private String title;
+
+    public VocaListEntity toEntity(){
+        return new VocaListEntity(author, title); 
+    }
+}
