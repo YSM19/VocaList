@@ -10,7 +10,12 @@ public class VocaListDto {
     private String author;
     private String title;
 
+    /*
     public VocaListEntity toEntity(){
         return new VocaListEntity(author, title); 
+    }
+    */
+        public VocaListEntity createVocalistToEntity(String email){
+        return new VocaListEntity(email, title, 0, 0L);
     }
 }
