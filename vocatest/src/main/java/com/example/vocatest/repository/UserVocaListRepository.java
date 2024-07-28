@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserVocaListRepository extends JpaRepository<UserVocaListEntity, Long> {
-    List<UserVocaListEntity> findByUserEntityEmail(String userId); //파라미터로 받는 값이 내가 조회할 속성값
+    List<UserVocaListEntity> findByUserEntityEmail(String email); //파라미터로 받는 값이 내가 조회할 속성값
 
 
     UserVocaListEntity findByVocaListEntityId(Long vocaId);

@@ -28,8 +28,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserEntity findUserById(@PathVariable("id")Long id){ 
-        return userService.findUserById(id);
+    public ResponseEntity<UserEntity> findUserById(@PathVariable("id")Long id){
+        UserEntity findUser = userService.findUserById(id);
+
+        return ResponseEntity.ok(findUser);
     }
 
     @DeleteMapping("{id}")
@@ -49,8 +51,6 @@ public class UserController {
         if (session != null) {
             session.invalidate();
         }
-
-        
 
         return ResponseEntity.ok("Logged out successfully");
     }
