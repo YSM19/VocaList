@@ -50,8 +50,6 @@ public class UserController {
             session.invalidate();
         }
 
-        
-
         return ResponseEntity.ok("Logged out successfully");
     }
 
