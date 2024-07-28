@@ -26,10 +26,12 @@ public class VocaContentController { // 단어
     }
 
     @PostMapping("/{id}/word")
-    public VocaContentEntity addWord(@PathVariable("id") Long id, @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
+    public ResponseEntity<VocaContentEntity> addWord(@PathVariable("id") Long id, @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
         VocaListEntity vocaListEntity = vocaService.findVocaListById(id);
         VocaContentEntity vocaContentEntity = vocaContentDto.toEntity(vocaListEntity);
-        return vocaService.saveVocaContent(vocaContentEntity);
+
+        VocaContentEntity vocaContentEntity1 = vocaService.saveVocaContent(vocaContentEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vocaContentEntity1);
     }
 
     @PatchMapping("/{id}/word/{wordid}")//단어수정

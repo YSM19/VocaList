@@ -39,7 +39,7 @@ public class UserVocalistController {
     }
 
     @GetMapping("/uservocalist/{id}") //유저가 단어장 얻어오기
-    public UserVocaListEntity addUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
+    public ResponseEntity<UserVocaListEntity> addUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
         if (oAuth2User != null) { //없는 단어장으로 post 요청 갔을 때 예외처리 해줘야 할듯
             String email = oAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
@@ -69,8 +69,10 @@ public class UserVocalistController {
             userVocaListEntity.setVocaListEntity(createVocaListEntity);
             //userVocaListEntity.setVocaListEntity(vocaService.findVocaListById(id));
             userVocaListEntity.setUserEntity(userService.findUserByEmail(email));
-            return vocaService.saveUserVocaList(userVocaListEntity);
 
+            UserVocaListEntity userVocaListEntity1 = vocaService.saveUserVocaList(userVocaListEntity);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity1);
             //대충 했는데 테스트 좀 많이 필요할듯.
         } else {
             log.info("No user logged in");
