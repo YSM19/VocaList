@@ -25,7 +25,7 @@ Dependencies
 - 백엔드 -
   SpingBoot, Spring Security, Spring Data Jpa
 - 데이터베이스 -
-  MySqL
+  MySql
 
  DB설계
  - UserEntity
