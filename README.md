@@ -22,9 +22,9 @@ Dependencies
 - MySql Driver
 
 기술 스택
-- 백엔드
+- 백엔드 -
   SpingBoot, Spring Security, Spring Data Jpa
-- 데이터베이스
+- 데이터베이스 -
   MySqL
 
  DB설계
