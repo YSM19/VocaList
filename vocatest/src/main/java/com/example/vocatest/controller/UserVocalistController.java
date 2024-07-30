@@ -24,7 +24,6 @@ public class UserVocalistController {
     private final VocaService vocaService;
     private final UserService userService;
 
-    //등록,삭제,조회만 하면 될듯
     @GetMapping("/uservocalist") // 유저가 가지고 있는 단어장 보여주기
     public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User) {
         if (oAuth2User != null) {
@@ -38,9 +37,9 @@ public class UserVocalistController {
         }
     }
 
-    @GetMapping("/uservocalist/{id}") //유저가 단어장 얻어오기
+    @GetMapping("/uservocalist/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
     public ResponseEntity<UserVocaListEntity> addUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
-        if (oAuth2User != null) { //없는 단어장으로 post 요청 갔을 때 예외처리 해줘야 할듯
+        if (oAuth2User != null) { //없는 단어장으로 get 요청 갔을 때 예외처리 필요
             String email = oAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
 
@@ -73,22 +72,19 @@ public class UserVocalistController {
             UserVocaListEntity userVocaListEntity1 = vocaService.saveUserVocaList(userVocaListEntity);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity1);
-            //대충 했는데 테스트 좀 많이 필요할듯.
         } else {
             log.info("No user logged in");
             return null;
         }
     }
 
-    //유저가 가지고 있는 단어장 삭제 메소드
-    //여기서 주는 id 값은 단어장 PK Id값임.
     @DeleteMapping("/uservocalist/delete/{id}")
-    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
+    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){ //유저가 가지고 있는 단어장 삭제 메소드
         if (oAuth2User != null){
             String email = oAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
 
-            //여기서 유저가 없는 단어장을 delete요청 한다면 예외처리 해야될 것 같은데 그럴 일이 없을거같으니 일단 패스
+            //여기서 유저가 없는 단어장을 delete요청 한다면 예외처리 해야함
 
             List<UserVocaListEntity> userVocaListEntity = vocaService.getUserVocaList(email); //
             log.info("유저가 가지고 있는 모든 단어장 :" + userVocaListEntity.toString()); //여기까지 잘 됨
