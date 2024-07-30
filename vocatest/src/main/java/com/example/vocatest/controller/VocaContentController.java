@@ -20,7 +20,7 @@ public class VocaContentController { // 단어
 
 
     @GetMapping("{id}/word")
-    public ResponseEntity<List<VocaContentEntity>> getAllVocasByVocaListId(@PathVariable("id") Long id) { //단어장에 있는 모든 단어를 보여주는 메소드
+    public ResponseEntity<List<VocaContentEntity>> getAllVocasByVocaListId(@PathVariable("id") Long id) { //단어장에 있는 모든 단어 조회
         List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(id);
         return ResponseEntity.ok().body(vocas);
     }
