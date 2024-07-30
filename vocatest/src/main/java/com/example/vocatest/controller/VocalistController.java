@@ -25,20 +25,14 @@ public class VocalistController { // 단어장
     private final UserService userService;
 
     @GetMapping
-    public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트를 보여주기
+    public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트 조회
         return vocaService.findAllVocaList();
     }
 
-    @GetMapping("{id}") // 선택한 단어장 보기
+    @GetMapping("{id}") // 선택한 단어장 조회
     public VocaListEntity findVocaListById(@PathVariable("id")Long id){
         return vocaService.findVocaListById(id);
     }
-
-    // @PostMapping // 단어장 생성
-    // public VocaListEntity createVocaList(@RequestBody VocaListDto vocaListDto){ //단어장 만들기
-    //     VocaListEntity vocaListEntity = vocaListDto.toEntity();
-    //     return vocaService.saveVocaList(vocaListEntity);
-    // }
 
     @PostMapping //단어장 생성
     public ResponseEntity<VocaListEntity> createVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto){
@@ -85,7 +79,7 @@ public class VocalistController { // 단어장
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping("{id}/editsecret/open")
+    @GetMapping("{id}/editsecret/open") // 단어장 공개 설정
     public void openVocaListSecret(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
         String email = oAuth2User.getAttribute("email");
         String authorEmail = vocaService.findVocaListById(id).getAuthor();
@@ -103,7 +97,7 @@ public class VocalistController { // 단어장
 
     }
 
-    @GetMapping("{id}/editsecret/close")
+    @GetMapping("{id}/editsecret/close") //단어장 비공개 설정
     public void closeVocaListSecret(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
         String email = oAuth2User.getAttribute("email");
         String authorEmail = vocaService.findVocaListById(id).getAuthor();
@@ -122,7 +116,6 @@ public class VocalistController { // 단어장
 
 
 //    {
-//  "author": "123Updated",
 //  "title": "chinese"
 //    }
 
