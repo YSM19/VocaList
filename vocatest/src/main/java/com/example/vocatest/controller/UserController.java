@@ -23,18 +23,18 @@ public class UserController {
 
 
     @GetMapping
-    public List<UserEntity> findAllUser(){
+    public List<UserEntity> findAllUser(){//모든 유저 조회
        return userService.findAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")// 특정 id 사용자 조회
     public ResponseEntity<UserEntity> findUserById(@PathVariable("id")Long id){
         UserEntity findUser = userService.findUserById(id);
 
         return ResponseEntity.ok(findUser);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}")//특정 id 사용자 삭제
     public ResponseEntity<UserEntity> delete(@PathVariable("id")Long id){
         UserEntity userEntity = userService.findUserById(id);
         if (userEntity == null){
@@ -45,7 +45,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/logout")
+    @GetMapping("/logout")//로그아웃
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
