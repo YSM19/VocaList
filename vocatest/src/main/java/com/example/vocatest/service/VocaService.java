@@ -70,7 +70,7 @@ public class VocaService {
         return userVocaListRepository.save(userVocaListEntity);
     }
 
-    public UserVocaListEntity getUserVocaId(Long title){
+    public UserVocaListEntity getUserVocaListId(Long title){
         return userVocaListRepository.findByVocaListEntityId(title);
     }
 
