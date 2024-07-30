@@ -25,8 +25,10 @@ public class VocalistController { // 단어장
     private final UserService userService;
 
     @GetMapping
-    public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트 조회
-        return vocaService.findAllVocaList();
+    public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트를 보여주기
+        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
+        List<VocaListEntity> openedVocaListEntity = vocaService.findNoSecretVocaList(1);
+        return openedVocaListEntity;
     }
 
     @GetMapping("{id}") // 선택한 단어장 조회
