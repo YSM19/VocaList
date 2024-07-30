@@ -5,5 +5,5 @@ import com.example.vocatest.entity.VocaListEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VocaListRepository extends JpaRepository<VocaListEntity, Long> {
-
+      List<VocaListEntity> findBySecret(int secret);
 }
