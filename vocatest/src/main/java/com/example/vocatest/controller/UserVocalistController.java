@@ -89,7 +89,7 @@ public class UserVocalistController {
             List<UserVocaListEntity> userVocaListEntity = vocaService.getUserVocaList(email); //
             log.info("유저가 가지고 있는 모든 단어장 :" + userVocaListEntity.toString()); //여기까지 잘 됨
 
-            UserVocaListEntity deleteTarget = vocaService.getUserVocaId(id);
+            UserVocaListEntity deleteTarget = vocaService.getUserVocaListId(id);
             log.info("삭제되어야 할 단어장: " + deleteTarget); //잘 됨.
 
             vocaService.deleteUserVocaList(deleteTarget);
