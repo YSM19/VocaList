@@ -17,7 +17,7 @@ public class QuizController {
     private final VocaService vocaService;
 
     @GetMapping("/uservocalist/quiz/{id}/{quizcount}")
-    public List<VocaContentEntity> showRandomQuiz(@PathVariable("id") Long id, @PathVariable("quizcount") Long quizcount){
+    public List<VocaContentEntity> showRandomQuiz(@PathVariable("id") Long id, @PathVariable("quizcount") Long quizcount){//퀴즈 랜덤으로 반환
 
 
         List<VocaContentEntity> selectedVocaContents = vocaService.findAllVocasByVocaListId(id);
@@ -27,6 +27,6 @@ public class QuizController {
             quizcount = (long) selectedVocaContents.size();
         }
 
-        return selectedVocaContents.subList(0, quizcount.intValue()); //list 가 지원하는 메소드 출력할 범위를 지정함. 끝 인덱스는 포함x
+        return selectedVocaContents.subList(0, quizcount.intValue()); 
     }
 }
