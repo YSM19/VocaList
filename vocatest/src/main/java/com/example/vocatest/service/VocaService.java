@@ -30,6 +30,10 @@ public class VocaService {
         return vocaListRepository.findAll();
     }
 
+    public List<VocaListEntity> findNoSecretVocaList(int secret){
+        return vocaListRepository.findBySecret(secret);
+    }
+
     public VocaListEntity saveVocaList(VocaListEntity vocaListEntity){
         return vocaListRepository.save(vocaListEntity);
     }
