@@ -14,14 +14,15 @@
 - 정도원: 프론트엔드 개발
 
 ## 기술 스택
-### Backend 
-- Language: Java 21 
-- Framework: SpingBoot, Spring Security - OAuth2
-- ORM: JPA
-- Database: MySql
-- Server: AWS ec2, rds, docker
+  ### Backend 
+  - Language: Java 21 
+  - Framework: SpingBoot, Spring Security - OAuth2
+  - ORM: JPA
+  - Database: MySql
+  - Server: AWS ec2, rds, docker
 
-### Frontend
+  ### Frontend
+  - 
 
 
 ## 구현 기능
