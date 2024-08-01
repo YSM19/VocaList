@@ -16,7 +16,7 @@
 ## 기술 스택
 ### Backend 
 - Language: Java 21 
-- Library & Framework: SpingBoot, Spring Security - OAuth2
+- Framework: SpingBoot, Spring Security - OAuth2
 - ORM: JPA
 - Database: MySql
 - Server: AWS ec2, rds, docker
