@@ -18,7 +18,7 @@ public class VocaContentEntity { //단어 내용
     private String transtext; //해석
 
     @ManyToOne
-    @JoinColumn(name = "voca_id")
+    @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
 

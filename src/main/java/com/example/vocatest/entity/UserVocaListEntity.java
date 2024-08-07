@@ -14,7 +14,7 @@ public class UserVocaListEntity { //유저가 가지고 있는 단어장
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "voca_id")
+    @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity; 
                                             
 
