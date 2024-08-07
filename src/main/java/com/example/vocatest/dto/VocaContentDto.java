@@ -11,6 +11,7 @@ public class VocaContentDto {
     private String text;
     private String transtext;
     private VocaListEntity vocaListEntity;
+
     public VocaContentEntity toEntity(VocaListEntity vocaListEntity){
         return new VocaContentEntity(text, transtext, vocaListEntity);
     }
