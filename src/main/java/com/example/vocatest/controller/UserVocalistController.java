@@ -34,18 +34,17 @@ public class UserVocalistController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        else {
-            String email = oAuth2User.getAttribute("email");
-            log.info("Logged in as : " + email);
+        String email = oAuth2User.getAttribute("email");
+        log.info("Logged in as : " + email);
 
-            try {
-                UserVocaListEntity userVocaListEntity = vocaService.createUserVocaList(email, id);
-                return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity);
-            } catch (IllegalArgumentException e) {
-                log.info(e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
+        try {
+            UserVocaListEntity userVocaListEntity = vocaService.createUserVocaList(email, id);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity);
+        } catch (IllegalArgumentException e) {
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+
     }
 
     @GetMapping("/uservocalist") // 유저가 가지고 있는 단어장 보여주기
