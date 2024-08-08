@@ -2,7 +2,6 @@ package com.example.vocatest.controller;
 
 import com.example.vocatest.dto.VocaContentDto;
 import com.example.vocatest.entity.VocaContentEntity;
-import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.service.VocaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,8 @@ public class VocaContentController { // 단어
 
     // create
     @PostMapping("/{id}/word")
-    public ResponseEntity<VocaContentEntity> createVocaContent(@PathVariable("id") Long id,
-                                                               @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
+    public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("id") Long id,
+                                                            @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
 
         VocaContentEntity vocaContentEntity = vocaService.createVocaContent(id, vocaContentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(vocaContentEntity);

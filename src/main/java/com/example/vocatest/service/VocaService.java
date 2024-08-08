@@ -82,7 +82,7 @@ public class VocaService {
     public VocaContentEntity createVocaContent(Long vocaListId, VocaContentDto vocaContentDto){
         VocaListEntity vocaListEntity = findVocaListById(vocaListId);
         if (vocaListEntity == null) {
-            throw new IllegalArgumentException("유효한 VocaList ID가 있음");
+            throw new IllegalArgumentException("유효한 VocaList ID가 없음");
         }
         VocaContentEntity vocaContentEntity = vocaContentDto.toEntity(vocaListEntity);
         return vocaContentRepository.save(vocaContentEntity);
@@ -102,7 +102,7 @@ public class VocaService {
     public VocaContentEntity updateVocaContent(Long id, Long wordid, VocaContentDto vocaContentDto){
         VocaContentEntity target = getVocaContentId(wordid);
         if (target == null) {
-            throw new IllegalArgumentException("유효한 Word ID");
+            throw new IllegalArgumentException("유효한 Word ID가 없음");
         }
         target.setText(vocaContentDto.getText());
         target.setTranstext(vocaContentDto.getTranstext());

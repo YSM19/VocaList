@@ -22,11 +22,10 @@ import java.util.List;
 public class VocalistController { // 단어장
 
     private final VocaService vocaService;
-    private final UserService userService;
 
     @GetMapping
     public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트를 보여주기
-        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
+//        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
         List<VocaListEntity> openedVocaListEntity = vocaService.findNoSecretVocaList(1);
         return openedVocaListEntity;
     }

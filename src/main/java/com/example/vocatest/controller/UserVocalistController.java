@@ -1,9 +1,6 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.entity.UserVocaListEntity;
-import com.example.vocatest.entity.VocaContentEntity;
-import com.example.vocatest.entity.VocaListEntity;
-import com.example.vocatest.repository.UserVocaListRepository;
 import com.example.vocatest.service.UserService;
 import com.example.vocatest.service.VocaService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +23,7 @@ public class UserVocalistController {
     private final UserService userService;
 
     @GetMapping("/uservocalist/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
-    public ResponseEntity<UserVocaListEntity> createUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
+    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                               @PathVariable("id")Long id){
 
         if (oAuth2User == null) {
