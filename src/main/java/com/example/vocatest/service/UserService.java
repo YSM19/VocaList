@@ -81,6 +81,6 @@ public class UserService extends DefaultOAuth2UserService {
     }
 
     public UserEntity findUserByEmail(String email){
-        return userRepository.findByemail(email);
+        return userRepository.findByEmail(email);
     }
 }

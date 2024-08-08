@@ -37,38 +37,32 @@ public class VocalistController { // 단어장
     }
 
     @PostMapping //단어장 생성
-    public ResponseEntity<VocaListEntity> createVocaList(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto){
+    public ResponseEntity<VocaListEntity> createVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
+                                                         @RequestBody VocaListDto vocaListDto){
         if (oAuth2User != null){
             String email = oAuth2User.getAttribute("email");
-            VocaListEntity vocaListEntity = vocaListDto.createVocalistToEntity(email);
-            vocaService.saveVocaList(vocaListEntity);
+            VocaListEntity vocaListEntity = vocaService.createVocaList(email, vocaListDto);
 
-            UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
-            userVocaListEntity.setUserEntity(userService.findUserByEmail(email));
-            userVocaListEntity.setVocaListEntity(vocaListEntity);
-            vocaService.saveUserVocaList(userVocaListEntity);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.CREATED).body(vocaListEntity);
         } else{
             log.info("로그인 되어있지 않음.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
     }
 
     @PatchMapping("{id}") // 단어장 수정
-    public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("id")Long id, @RequestBody VocaListDto vocaListDto, @AuthenticationPrincipal OAuth2User oAuth2User){
-        String email = oAuth2User.getAttribute("email");
-        VocaListEntity target = vocaService.findVocaListById(id);
-
-        if (target == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("id")Long id,
+                                                         @RequestBody VocaListDto vocaListDto,
+                                                         @AuthenticationPrincipal OAuth2User oAuth2User){
+        if (oAuth2User != null){
+            String email = oAuth2User.getAttribute("email");
+            VocaListEntity updatedVocaList = vocaService.updateVocaListById(id, vocaListDto, email);
+            if (updatedVocaList != null) {
+                return ResponseEntity.status(HttpStatus.OK).body(updatedVocaList);
+            }
         }
-        //target.setAuthor(vocaListDto.getAuthor());
-        target.setAuthor(email);
-        target.setTitle(vocaListDto.getTitle());
-
-        VocaListEntity updated = vocaService.saveVocaList(target);
-        return ResponseEntity.status(HttpStatus.OK).body(updated);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
     @DeleteMapping("{id}")
@@ -82,7 +76,8 @@ public class VocalistController { // 단어장
     }
 
     @GetMapping("{id}/editsecret/open") // 단어장 공개 설정
-    public void openVocaListSecret(@AuthenticationPrincipal OAuth2User oAuth2User, @PathVariable("id")Long id){
+    public void openVocaListSecret(@AuthenticationPrincipal OAuth2User oAuth2User,
+                                   @PathVariable("id")Long id){
         String email = oAuth2User.getAttribute("email");
         String authorEmail = vocaService.findVocaListById(id).getAuthor();
         log.info("접근하는 유저의 이메일 " + email);
@@ -91,7 +86,7 @@ public class VocalistController { // 단어장
         if (email != null && email.equals(authorEmail)) {
             log.info("수정 가능한 이용자");
             vocaService.findVocaListById(id).setSecret(1); // 공개로 설정함.
-            vocaService.saveVocaList(findVocaListById(id));// 저장
+//            vocaService.saveVocaList(findVocaListById(id));// 저장
             log.info("공개 설정 완료 db확인");
         } else {
             log.info("수정 가능한 이용자가 아니거나 로그인 되어있지 않음.");
@@ -109,7 +104,7 @@ public class VocalistController { // 단어장
         if (email != null && email.equals(authorEmail)) {
             log.info("수정 가능한 이용자");
             vocaService.findVocaListById(id).setSecret(0); // 비공개로 설정함.
-            vocaService.saveVocaList(findVocaListById(id));// 저장
+//            vocaService.saveVocaList(findVocaListById(id));// 저장
             log.info("비공개 설정 완료 db확인");
         } else {
             log.info("수정 가능한 이용자가 아니거나 로그인 되어있지 않음.");

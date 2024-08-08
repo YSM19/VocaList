@@ -18,37 +18,33 @@ public class VocaContentController { // 단어
 
     private final VocaService vocaService;
 
+    // create
+    @PostMapping("/{id}/word")
+    public ResponseEntity<VocaContentEntity> createVocaContent(@PathVariable("id") Long id,
+                                                               @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
 
+        VocaContentEntity vocaContentEntity = vocaService.createVocaContent(id, vocaContentDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vocaContentEntity);
+    }
+
+    // read
     @GetMapping("{id}/word")
-    public ResponseEntity<List<VocaContentEntity>> getAllVocasByVocaListId(@PathVariable("id") Long id) { //단어장에 있는 모든 단어 조회
+    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("id") Long id) { //단어장에 있는 모든 단어 조회
         List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(id);
         return ResponseEntity.ok().body(vocas);
     }
 
-    @PostMapping("/{id}/word")
-    public ResponseEntity<VocaContentEntity> addWord(@PathVariable("id") Long id, @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
-        VocaListEntity vocaListEntity = vocaService.findVocaListById(id);
-        VocaContentEntity vocaContentEntity = vocaContentDto.toEntity(vocaListEntity);
-
-        VocaContentEntity vocaContentEntity1 = vocaService.saveVocaContent(vocaContentEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(vocaContentEntity1);
-    }
-
+    //update
     @PatchMapping("/{id}/word/{wordid}")//단어수정
-    public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("id")Long id, @PathVariable("wordid") Long wordid, @RequestBody VocaContentDto vocaContentDto){
-        VocaContentEntity target = vocaService.getVocaContentId(wordid);
+    public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("id")Long id,
+                                                               @PathVariable("wordid") Long wordid,
+                                                               @RequestBody VocaContentDto vocaContentDto){
 
-        if (target == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        target.setText(vocaContentDto.getText());
-        target.setTranstext(vocaContentDto.getTranstext());
-
-        VocaContentEntity updated = vocaService.saveVocaContent(target);
+        VocaContentEntity updated = vocaService.updateVocaContent(id, wordid, vocaContentDto);
         return ResponseEntity.status(HttpStatus.OK).body(updated);
     }
 
+    //delete
     @DeleteMapping("{id}/word/{wordid}")//단어 삭제
     public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("id")Long id, @PathVariable("wordid")Long wordid){
         VocaContentEntity target = vocaService.getVocaContentId(wordid);
