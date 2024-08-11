@@ -22,7 +22,7 @@ public class UserVocalistController {
     private final VocaService vocaService;
     private final UserService userService;
 
-    @GetMapping("/uservocalist/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
+    @GetMapping("/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
     public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                               @PathVariable("id")Long id){
 
@@ -44,7 +44,7 @@ public class UserVocalistController {
 
     }
 
-    @GetMapping("/uservocalist") // 유저가 가지고 있는 단어장 보여주기
+    @GetMapping() // 유저가 가지고 있는 단어장 보여주기
     public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User) {
         if (oAuth2User != null) {
             String email = oAuth2User.getAttribute("email");
@@ -58,7 +58,7 @@ public class UserVocalistController {
     }
 
 
-    @DeleteMapping("/uservocalist/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                      @PathVariable("id")Long id){ //유저가 가지고 있는 단어장 삭제 메소드
 

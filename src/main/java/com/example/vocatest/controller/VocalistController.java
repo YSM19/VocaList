@@ -103,7 +103,7 @@ public class VocalistController { // 단어장
         if (email != null && email.equals(authorEmail)) {
             log.info("수정 가능한 이용자");
             vocaService.findVocaListById(id).setSecret(0); // 비공개로 설정함.
-//            vocaService.saveVocaList(findVocaListById(id));// 저장
+            vocaService.saveVocaList(findVocaListById(id));// 저장
             log.info("비공개 설정 완료 db확인");
         } else {
             log.info("수정 가능한 이용자가 아니거나 로그인 되어있지 않음.");
