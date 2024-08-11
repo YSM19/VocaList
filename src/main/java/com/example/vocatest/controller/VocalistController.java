@@ -1,9 +1,7 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.dto.VocaListDto;
-import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaListEntity;
-import com.example.vocatest.service.UserService;
 import com.example.vocatest.service.VocaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +24,7 @@ public class VocalistController { // 단어장
     @GetMapping
     public List<VocaListEntity> findAllVocaList(){ // 단어장의 모든 리스트를 보여주기
 //        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
-        List<VocaListEntity> openedVocaListEntity = vocaService.findNoSecretVocaList(1);
+        List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
         return openedVocaListEntity;
     }
 

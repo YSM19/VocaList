@@ -10,9 +10,6 @@ import com.example.vocatest.repository.VocaContentRepository;
 import com.example.vocatest.repository.VocaListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +51,7 @@ public class VocaService {
         return vocaListRepository.findAll();
     }
 
-    public List<VocaListEntity> findNoSecretVocaList(int secret){
+    public List<VocaListEntity> findSecretVocaList(int secret){
         return vocaListRepository.findBySecret(secret);
     }
 
