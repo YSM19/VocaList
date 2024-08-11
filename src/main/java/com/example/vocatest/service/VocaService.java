@@ -128,10 +128,12 @@ public class VocaService {
         // 단어장에 들어가야할 단어 리스트
         VocaListEntity originalVocaListEntity = vocaListRepository.findById(id).orElse(null);
 
-        VocaListEntity createVocaListEntity = new VocaListEntity();
-        createVocaListEntity.setAuthor(originalVocaListEntity.getAuthor());
-        createVocaListEntity.setTitle(originalVocaListEntity.getTitle());
-        createVocaListEntity.setCount(0L);
+        VocaListEntity createVocaListEntity = VocaListDto.createVocaListToEntity(originalVocaListEntity);
+
+//        VocaListEntity createVocaListEntity = new VocaListEntity();
+//        createVocaListEntity.setAuthor(originalVocaListEntity.getAuthor());
+//        createVocaListEntity.setTitle(originalVocaListEntity.getTitle());
+//        createVocaListEntity.setCount(0L);
         vocaListRepository.save(createVocaListEntity);
 
         List<VocaContentEntity> selectedAllVocaContent = vocaContentRepository.findByVocaListEntityId(id);

@@ -1,5 +1,6 @@
 package com.example.vocatest.controller;
 
+import com.example.vocatest.dto.VocaListDto;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.service.UserService;
 import com.example.vocatest.service.VocaService;
@@ -24,7 +25,7 @@ public class UserVocalistController {
 
     @GetMapping("/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
     public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
-                                                              @PathVariable("id")Long id){
+                                                                @PathVariable("id")Long id){
 
         if (oAuth2User == null) {
             log.info("No user logged in");
