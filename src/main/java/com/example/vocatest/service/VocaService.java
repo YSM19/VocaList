@@ -9,6 +9,7 @@ import com.example.vocatest.repository.UserVocaListRepository;
 import com.example.vocatest.repository.VocaContentRepository;
 import com.example.vocatest.repository.VocaListRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class VocaService {
 
@@ -43,9 +45,9 @@ public class VocaService {
     }
 
 
-//    public VocaListEntity saveVocaList(VocaListEntity vocaListEntity){
-//        return vocaListRepository.save(vocaListEntity);
-//    }
+    public VocaListEntity saveVocaList(VocaListEntity vocaListEntity){
+        return vocaListRepository.save(vocaListEntity);
+    }
 
     // read
     public List<VocaListEntity> findAllVocaList(){
@@ -129,6 +131,7 @@ public class VocaService {
         VocaListEntity createVocaListEntity = new VocaListEntity();
         createVocaListEntity.setAuthor(originalVocaListEntity.getAuthor());
         createVocaListEntity.setTitle(originalVocaListEntity.getTitle());
+        createVocaListEntity.setCount(0L);
         vocaListRepository.save(createVocaListEntity);
 
         List<VocaContentEntity> selectedAllVocaContent = vocaContentRepository.findByVocaListEntityId(id);
@@ -146,6 +149,9 @@ public class VocaService {
         UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
         userVocaListEntity.setVocaListEntity(createVocaListEntity);
         userVocaListEntity.setUserEntity(userService.findUserByEmail(userEmail));
+        originalVocaListEntity.addCount(1L); // 불러온 count 증가
+        saveVocaList(originalVocaListEntity);
+
 
         return userVocaListRepository.save(userVocaListEntity);
     }
@@ -170,13 +176,7 @@ public class VocaService {
 
     }
 
-
-
-
-
     //-------------------퀴즈 관련 메소드---------------------------
-
-
 
 
 }

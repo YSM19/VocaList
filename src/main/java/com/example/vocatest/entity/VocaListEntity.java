@@ -36,7 +36,7 @@ public class VocaListEntity { //단어장 목록
     }
 
     public void addCount(Long count){
-        this.count =+ count;
+        this.count += count;
     }
 
 }
