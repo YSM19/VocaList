@@ -15,7 +15,13 @@ public class VocaListDto {
         return new VocaListEntity(author, title); 
     }
     */
-        public VocaListEntity createVocalistToEntity(String email){
+    public VocaListEntity createVocalistToEntity(String email){
         return new VocaListEntity(email, title, 0, 0L);
     }
+
+    public static VocaListEntity createVocaListToEntity (VocaListEntity originalVocaListEntity){
+        return new VocaListEntity(originalVocaListEntity.getAuthor(), originalVocaListEntity.getTitle(), 0, 0L);
+
+    }
+
 }
