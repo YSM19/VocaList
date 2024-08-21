@@ -46,8 +46,8 @@ jobs:
         if: contains(github.ref, 'main')
         run: |
           docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-          docker build -f Dockerfile -t "${{ secrets.DOCKER_USERNAME }}"/vocalist:latest .
-          docker push "${{ secrets.DOCKER_USERNAME }}"/vocalist:latest
+          docker build -f Dockerfile -t "${{ secrets.DOCKER_USERNAME }}"/vocalist .
+          docker push "${{ secrets.DOCKER_USERNAME }}"/vocalist
 
       ## AWS EC2에 접속하고 main을 배포합니다.
       - name: Deploy
@@ -55,7 +55,7 @@ jobs:
         id: deploy
         if: contains(github.ref, 'main')
         with:
-          host: ${{ secrets.HOST_DEV }} # EC2 인스턴스 퍼블릭 DNS
+          host: ${{ secrets.HOST }} # EC2 인스턴스 퍼블릭 DNS
           username: ${{ secrets.USERNAME }} # 인스턴스를 시작하는 데 사용되는 AMI에 정의된 사용자 이름을 입력합니다. 사용자 지정 사용자 이름을 정의하지 않은 경우 기본 사용자 이름인 ubuntu을(를) 사용합니다.
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
@@ -63,6 +63,6 @@ jobs:
             sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             sudo docker stop vocalist
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
-            sudo docker pull "${{ secrets.DOCKER_USERNAME_DEV }}"/vocalist:latest
+            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/vocalist
             sudo docker-compose up -d
             sudo docker image prune -a -f
