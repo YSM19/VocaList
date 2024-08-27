@@ -1,7 +1,10 @@
 package com.example.vocatest.controller;
 
+import com.example.vocatest.controllerDocs.QuizControllerDocs;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.service.VocaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("api/uservocalist/quiz")
-public class QuizController {
+@Tag(name = "퀴즈", description = "퀴즈 관련 API")
+public class QuizController implements QuizControllerDocs {
 
     private final VocaService vocaService;
 

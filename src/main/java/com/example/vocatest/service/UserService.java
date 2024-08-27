@@ -1,10 +1,12 @@
 package com.example.vocatest.service;
 
-import com.example.vocatest.dto.UserDto;
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.GoogleResponse;
 import com.example.vocatest.dto.OAuth2Response;
+import com.example.vocatest.dto.UserDTO;
 import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -14,27 +16,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-
-        this.userRepository = userRepository;
-    }
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
+        // 부모 클래스의 메서드를 사용하여 객체를 생성함
         OAuth2User oauth2User = super.loadUser(userRequest); 
-        System.out.println(oauth2User.getAttributes()); 
+//        System.out.println(oauth2User.getAttributes());
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId(); 
+        // 제공자
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
         OAuth2Response oAuth2Response = null;
-        /*
-        if (registrationId.equals("naver")) {
-           
-        }*/
+
         if (registrationId.equals("google")) {
             oAuth2Response = new GoogleResponse(oauth2User.getAttributes());
     
@@ -43,29 +40,42 @@ public class UserService extends DefaultOAuth2UserService {
         }
 
         String username = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
-        UserEntity existData = userRepository.findByUsername(username); 
+        UserEntity existData = userRepository.findByUsername(username);
 
-        String role = "ROLE_USER";
         if (existData == null) {
 
             UserEntity userEntity = new UserEntity();
             userEntity.setUsername(username);
             userEntity.setEmail(oAuth2Response.getEmail());
-            userEntity.setRole(role);
+            userEntity.setName(oAuth2Response.getName());
+            userEntity.setRole("ROLE_USER");
 
             userRepository.save(userEntity);
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(oAuth2Response.getName());
+            userDTO.setUserName(username);
+            userDTO.setEmail(oAuth2Response.getEmail());
+            userDTO.setRole("ROLE_USER");
+
+            return new CustomOAuth2User(userDTO);
         }
         else { 
 
-            existData.setUsername(username);
+            existData.setName(oAuth2Response.getName());
             existData.setEmail(oAuth2Response.getEmail());
 
-            role = existData.getRole();
-
             userRepository.save(existData);
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserName(existData.getUsername());
+            userDTO.setName(oAuth2Response.getName());
+            userDTO.setEmail(existData.getEmail());
+            userDTO.setRole("ROLE_USER");
+
+            return new CustomOAuth2User(userDTO);
         }
 
-        return new UserDto(oAuth2Response, role);
     }
 
     public List<UserEntity> findAllUsers(){
@@ -76,11 +86,12 @@ public class UserService extends DefaultOAuth2UserService {
         return userRepository.findById(id).orElse(null);
     } 
 
-    public void delete(UserEntity userEntity){ 
+    public void delete(UserEntity userEntity){
         userRepository.delete(userEntity);
     }
 
     public UserEntity findUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
 }

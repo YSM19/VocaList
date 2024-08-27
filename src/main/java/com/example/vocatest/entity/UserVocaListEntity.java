@@ -1,5 +1,6 @@
 package com.example.vocatest.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +14,15 @@ public class UserVocaListEntity { //유저가 가지고 있는 단어장
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Schema(description = "단어장 참조값")
     @ManyToOne
     @JoinColumn(name = "vocalist_id")
-    private VocaListEntity vocaListEntity; 
-                                            
+    private VocaListEntity vocaListEntity;
 
+    @Schema(description = "유저 참조값")
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity; 
+    private UserEntity userEntity;
 
     public UserVocaListEntity(){
 

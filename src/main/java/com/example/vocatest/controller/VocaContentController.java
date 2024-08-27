@@ -1,5 +1,6 @@
 package com.example.vocatest.controller;
 
+import com.example.vocatest.controllerDocs.VocaContentControllerDocs;
 import com.example.vocatest.dto.VocaContentDto;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.service.VocaService;
@@ -13,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/vocacontent")
-public class VocaContentController { // 단어
+public class VocaContentController implements VocaContentControllerDocs { // 단어
 
     private final VocaService vocaService;
 
@@ -31,6 +32,15 @@ public class VocaContentController { // 단어
     public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("id") Long id) { //단어장에 있는 모든 단어 조회
         List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(id);
         return ResponseEntity.ok().body(vocas);
+    }
+
+    @GetMapping("/word/{wordid}")// 특정 단어 조회
+    public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid){
+        VocaContentEntity target = vocaService.getVocaContentId(wordid);
+        if (target == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(target);
     }
 
     //update
