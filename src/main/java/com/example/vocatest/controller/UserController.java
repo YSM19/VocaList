@@ -1,5 +1,6 @@
 package com.example.vocatest.controller;
 
+import com.example.vocatest.controllerDocs.UserControllerDocs;
 import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UserController implements UserControllerDocs {
 
     private final UserService userService;
 
@@ -22,7 +23,6 @@ public class UserController {
     }
 
 
-    @GetMapping
     public List<UserEntity> findAllUser(){//모든 유저 조회
        return userService.findAllUsers();
     }

@@ -29,7 +29,7 @@ public class VocaService {
     // create
     public VocaListEntity createVocaList (String email, VocaListDto vocaListDto){
         // VocaList 생성
-        VocaListEntity vocaListEntity = vocaListDto.createVocalistToEntity(email);
+        VocaListEntity vocaListEntity = vocaListDto.toEntity(email);
         vocaListRepository.save(vocaListEntity);
 
         // UserVocaList 생성
@@ -105,12 +105,18 @@ public class VocaService {
         }
         target.setText(vocaContentDto.getText());
         target.setTranstext(vocaContentDto.getTranstext());
+        target.setSampleSentence(vocaContentDto.getSampleSentence());
         return vocaContentRepository.save(target);
     }
 
     // delete
     public void deleteVocaContent(VocaContentEntity vocaContentEntity){
         vocaContentRepository.delete(vocaContentEntity);
+    }
+
+    // save
+    public VocaContentEntity saveVocaContent(VocaContentEntity vocaContentEntity){
+        return vocaContentRepository.save(vocaContentEntity);
     }
 
     //--------------------유저가 보유한 단어장 처리 메소드--------------------------

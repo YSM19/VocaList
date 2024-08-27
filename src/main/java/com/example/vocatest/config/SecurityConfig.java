@@ -1,45 +1,87 @@
 package com.example.vocatest.config;
 
+import com.example.vocatest.jwt.CustomSuccessHandler;
+import com.example.vocatest.jwt.JwtFilter;
+import com.example.vocatest.jwt.JwtUtil;
 import com.example.vocatest.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
-@Configuration 
-@EnableWebSecurity 
+import java.util.Collections;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtUtil jwtUtil;
+    private final CustomSuccessHandler customSuccessHandler;
     private final UserService userService;
 
-    public SecurityConfig(UserService custom0Auth2UserService){
-        this.userService = custom0Auth2UserService;
-    }
-
-    @Bean 
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf((csrf) -> csrf.disable());
 
         http
-                .formLogin((login) -> login.disable()); 
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll());
+
 
         http
                 .httpBasic((basic) -> basic.disable());
 
+
         http
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(userService)));
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .oauth2Login((oauth2) -> oauth2
+                        .successHandler(customSuccessHandler)
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(userService))
+
+                );
 
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
                         .anyRequest().permitAll());
 
-        return http.build(); 
+        http
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+                        configuration.setAllowedOrigins(Collections.singletonList("*"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+                        configuration.setExposedHeaders(Collections.singletonList("*"));
+
+                        return configuration;
+                    }
+                }));
+
+        return http.build();
     }
 }
