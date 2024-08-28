@@ -25,7 +25,7 @@ public class UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         // 부모 클래스의 메서드를 사용하여 객체를 생성함
         OAuth2User oauth2User = super.loadUser(userRequest); 
-//        System.out.println(oauth2User.getAttributes());
+//        System.out.println("oauth2User.getAttributes: " + oauth2User.getAttributes());
 
         // 제공자
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
@@ -71,7 +71,7 @@ public class UserService extends DefaultOAuth2UserService {
             userDTO.setUserName(existData.getUsername());
             userDTO.setName(oAuth2Response.getName());
             userDTO.setEmail(existData.getEmail());
-            userDTO.setRole("ROLE_USER");
+            userDTO.setRole(existData.getRole());
 
             return new CustomOAuth2User(userDTO);
         }
