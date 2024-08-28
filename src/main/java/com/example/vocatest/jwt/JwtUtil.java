@@ -14,7 +14,7 @@ public class JwtUtil {
 
     private SecretKey secretKey;
 
-    // application.yml에 있는 평문 secret key를 가져와 초기화하였다.
+    // application.yml에 있는 평문 secret key를 가져와 초기화
     // 여기서는 HS256으로 진행했다.
     public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
@@ -49,9 +49,9 @@ public class JwtUtil {
     }
 
     // JWT 발급
-    public String createJwt(String category, String username, String name, String email, String role, Long expiredMs) {
+    public String createJwt(/*String category,*/ String username, String name, String email, String role, Long expiredMs) {
         return Jwts.builder()
-                .claim("category", category)
+//                .claim("category", category)
                 .claim("username", username)
                 .claim("name", name)
                 .claim("email", email)

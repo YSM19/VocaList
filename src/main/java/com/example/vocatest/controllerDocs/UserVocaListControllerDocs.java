@@ -26,7 +26,7 @@ public interface UserVocaListControllerDocs {
     })
 
     @GetMapping()
-    public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
+    public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User);
 
     @Parameters(value = {
             @Parameter(name = "id", description = "단어장 id 값"),
@@ -37,7 +37,7 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "단어장 받아오기 실패")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("id")Long id);
+    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("id")Long id);
 
 
     @Parameters(value = {
@@ -49,5 +49,5 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "단어장 삭제 실패")
     })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("id")Long id);
+    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("id")Long id);
 }

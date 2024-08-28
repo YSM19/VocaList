@@ -25,15 +25,15 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     private final UserService userService;
 
     @GetMapping("/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
-    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                                 @PathVariable("id")Long id){
 
-        if (customOAuth2User == null) {
+        if (oAuth2User == null) {
             log.info("No user logged in");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        String email = customOAuth2User.getAttribute("email");
+        String email = oAuth2User.getAttribute("email");
         log.info("Logged in as : " + email);
 
         try {
@@ -47,9 +47,9 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     }
 
     @GetMapping() // 유저가 가지고 있는 단어장 보여주기
-    public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        if (customOAuth2User != null) {
-            String email = customOAuth2User.getAttribute("email");
+    public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User) {
+        if (oAuth2User != null) {
+            String email = oAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
 
             return vocaService.getUserVocaList(email);
@@ -61,15 +61,15 @@ public class UserVocalistController implements UserVocaListControllerDocs {
 
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                      @PathVariable("id")Long id){ //유저가 가지고 있는 단어장 삭제 메소드
 
-        if (customOAuth2User == null) {
+        if (oAuth2User == null) {
             log.info("No user logged in");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        String email = customOAuth2User.getAttribute("email");
+        String email = oAuth2User.getAttribute("email");
         log.info("Logged in as : " + email);
 
         //여기서 유저가 없는 단어장을 delete요청 한다면 예외처리 해야함
