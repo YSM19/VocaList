@@ -1,5 +1,6 @@
 package com.example.vocatest.controllerDocs;
 
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,4 +59,11 @@ public interface UserControllerDocs {
     })
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response);
+
+    @Operation(summary = "유저정보 받아오기", description = "로그인한 유저정보 받아오기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "유저정보 받아오기 성공", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "유저정보 받아오기 실패", content = @Content(mediaType = "application/json"))
+    })
+    public UserEntity getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 }

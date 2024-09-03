@@ -56,10 +56,18 @@ public class SecurityConfig {
 
                 );
 
-
+        // *original
         http
                 .authorizeHttpRequests((auth) -> auth
                         .anyRequest().permitAll());
+
+        // *change
+//        //경로별 인가 작업
+//        http
+//                .authorizeHttpRequests((auth) -> auth
+//                        .requestMatchers("/", "/reissue").permitAll()
+//                        .anyRequest().authenticated());
+//        // */
 
         http
                 .sessionManagement((session) -> session
@@ -73,11 +81,19 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("*"));
+//                        AWS 버전
+                        configuration.setAllowedOrigins(Collections.singletonList("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000"));
+//                        Local 버전
+//                        configuration.setAllowedOrigins(Collections.singletonList("*"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
+                        // 우리쪽 서버에서 보낼때
+                        // change
+//                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+//                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+                        // original
                         configuration.setExposedHeaders(Collections.singletonList("*"));
 
                         return configuration;

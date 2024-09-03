@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -21,6 +22,7 @@ import java.util.Iterator;
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
+//    private final RedisService redisService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -36,19 +38,31 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-//        // accessToken과 refreshToken 생성
-//        String accessToken = jwtUtil.createJwt(/*"access",*/ username, name, email, role, 60000L);
-//        String refreshToken = jwtUtil.createJwt(/*"refresh",*/ username, name, email, role, 86400000L);
-
+        //*original*
         String token = jwtUtil.createJwt(username, name, email, role, 1000*60*60*24*7L);
 //        String token = jwtUtil.createJwt(username, name, email, role, 60*60*24L);
-
-        // 응답
-//        response.setHeader("access", "Bearer " + accessToken);
-//        response.addCookie(createCookie("refresh", refreshToken));
         response.addCookie(createCookie("Authorization", token));
         response.setStatus(HttpStatus.OK.value());
+        //*aws*
+        response.sendRedirect("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
+        // */
+
+//        //*change*
+////        accessToken과 refreshToken 생성
+//        String accessToken = jwtUtil.createJwt("access", username, name, email, role, 60000L);
+//        String refreshToken = jwtUtil.createJwt("refresh", username, name, email, role, 86400000L);
+//
+//        // redis에 insert (key = username / value = refreshToken)
+//        redisService.setValues(username, refreshToken, Duration.ofMillis(86400000L));
+//
+//        // 응답
+//        response.setHeader("access", "Bearer " + accessToken);
+//        response.addCookie(createCookie("refresh", refreshToken));
+//        response.setStatus(HttpStatus.OK.value());
+//        //*aws*
 //        response.sendRedirect("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
+//        // */
+
     }
 
     private Cookie createCookie(String key, String value) {

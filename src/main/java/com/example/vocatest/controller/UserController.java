@@ -1,6 +1,7 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.UserControllerDocs;
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +55,12 @@ public class UserController implements UserControllerDocs {
         }
 
         return ResponseEntity.ok("Logged out successfully");
+    }
+
+    @GetMapping("/myuserdata")
+    public UserEntity getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+        String email = customOAuth2User.getAttribute("email");
+        return userService.findUserByEmail(email);
     }
 
 }
