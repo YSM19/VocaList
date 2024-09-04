@@ -22,11 +22,10 @@ import java.util.List;
 public class UserVocalistController implements UserVocaListControllerDocs {
 
     private final VocaService vocaService;
-    private final UserService userService;
 
-    @GetMapping("/{id}") //유저가 목록에 있는 특정 id 단어장 가져오기
+    @GetMapping("/{uservocalistId}") //유저가 목록에 있는 특정 id 단어장 가져오기
     public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
-                                                                @PathVariable("id")Long id){
+                                                                @PathVariable("uservocalistId")Long uservocalistId){
 
         if (oAuth2User == null) {
             log.info("No user logged in");
@@ -37,7 +36,7 @@ public class UserVocalistController implements UserVocaListControllerDocs {
         log.info("Logged in as : " + email);
 
         try {
-            UserVocaListEntity userVocaListEntity = vocaService.createUserVocaList(email, id);
+            UserVocaListEntity userVocaListEntity = vocaService.createUserVocaList(email, uservocalistId);
             return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity);
         } catch (IllegalArgumentException e) {
             log.info(e.getMessage());
@@ -60,9 +59,9 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{uservocalistId}")
     public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
-                                                     @PathVariable("id")Long id){ //유저가 가지고 있는 단어장 삭제 메소드
+                                                     @PathVariable("uservocalistId")Long uservocalistId){ //유저가 가지고 있는 단어장 삭제 메소드
 
         if (oAuth2User == null) {
             log.info("No user logged in");
@@ -77,7 +76,7 @@ public class UserVocalistController implements UserVocaListControllerDocs {
 //            log.info("유저가 가지고 있는 모든 단어장 :" + userVocaListEntity.toString()); //여기까지 잘 됨
 
         try {
-            vocaService.deleteUserVocaList(id);
+            vocaService.deleteUserVocaList(uservocalistId);
 
             return ResponseEntity.ok("VocaList 삭제함");
         } catch (IllegalArgumentException e) {

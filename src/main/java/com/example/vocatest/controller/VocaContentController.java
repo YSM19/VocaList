@@ -29,8 +29,8 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
 
     // read
     @GetMapping("{vocalistId}/word")
-    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long id) { //단어장에 있는 모든 단어 조회
-        List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(id);
+    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId) { //단어장에 있는 모든 단어 조회
+        List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(vocalistId);
         return ResponseEntity.ok().body(vocas);
     }
 

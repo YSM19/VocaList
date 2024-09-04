@@ -41,4 +41,14 @@ public interface QuizControllerDocs {
     public ResponseEntity<QuizEntity> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
                                                     @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                     @RequestBody QuizDTO quizDTO);
+
+    @Parameters(value = {
+            @Parameter(name = "vocalistId", description = "단어장 id 값")
+    })
+    @Operation(summary = "푼 퀴즈 개수 조회", description = "유저가 푼 퀴즈 개수를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "푼 퀴즈 개수 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "푼 퀴즈 개수 조회 실패")
+    })
+    public ResponseEntity<List<QuizEntity>> showHistory(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 }

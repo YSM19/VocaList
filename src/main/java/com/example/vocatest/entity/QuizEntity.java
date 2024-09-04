@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,15 +18,21 @@ public class QuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int quizScore;
+    private String email;
+
+    private int score;
+
+    private Date date;
 
     @Schema(description = "단어장 참조값")
     @ManyToOne
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
-    public QuizEntity(int quizScore, VocaListEntity vocaListEntity) {
-        this.quizScore = quizScore;
+    public QuizEntity(String email, int score, Date date, VocaListEntity vocaListEntity) {
+        this.email = email;
+        this.score = score;
+        this.date = date;
         this.vocaListEntity = vocaListEntity;
     }
 

@@ -15,7 +15,7 @@ public class VocaListEntity { //단어장 목록
     private Long id;
 
     @Schema(description = "단어장 저자", example = "xxxx@gmail.com")
-    private String author; // 단어장의 작성자
+    private String email; // 단어장의 작성자
 
     @Schema(description = "단어장 제목", example = "English")
     private String title; // 단어장의 제목
@@ -33,8 +33,8 @@ public class VocaListEntity { //단어장 목록
 
 
     
-    public VocaListEntity(String author, String title, int secret, Long count) {
-        this.author = author;
+    public VocaListEntity(String email, String title, int secret, Long count) {
+        this.email = email;
         this.title = title;
         this.secret = secret;
         this.count = count;

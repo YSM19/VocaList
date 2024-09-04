@@ -31,26 +31,26 @@ public interface UserControllerDocs {
     public List<UserEntity> findAllUser();
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "유저 id 값"),
+            @Parameter(name = "userId", description = "유저 id 값"),
     })
     @Operation(summary = "특정 사용자 조회", description = "특정 사용자의 정보를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "사용자 조회 성공", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "사용자 조회 실패", content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> findUserById(@PathVariable("id")Long id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserEntity> findUserById(@PathVariable("userId")Long userId);
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "유저 id 값"),
+            @Parameter(name = "userId", description = "유저 id 값"),
     })
     @Operation(summary = "특정 사용자 삭제", description = "특정 사용자의 정보를 삭제합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "사용자 삭제 성공", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "사용자 삭제 실패", content = @Content(mediaType = "application/json"))
     })
-    @DeleteMapping("{id}")
-    public ResponseEntity<UserEntity> delete(@PathVariable("id")Long id);
+    @DeleteMapping("{userId}")
+    public ResponseEntity<UserEntity> delete(@PathVariable("userId")Long userId);
 
     @Operation(summary = "로그아웃", description = "로그아웃")
     @ApiResponses({

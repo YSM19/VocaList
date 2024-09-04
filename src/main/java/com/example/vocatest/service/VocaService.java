@@ -59,11 +59,15 @@ public class VocaService {
             return vocaListRepository.findById(id).orElse(null);
     }
 
+    public List<VocaListEntity> findVocaListByEmail(String email){
+        return vocaListRepository.findByEmail(email);
+    }
+
     // update
     public VocaListEntity updateVocaListById(Long id, VocaListDto vocaListDto, String email){
         VocaListEntity vocaListEntity = findVocaListById(id);
         if (vocaListEntity != null) {
-            vocaListEntity.setAuthor(email);
+            vocaListEntity.setEmail(email);
             vocaListEntity.setTitle(vocaListDto.getTitle());
 
             return vocaListRepository.save(vocaListEntity);

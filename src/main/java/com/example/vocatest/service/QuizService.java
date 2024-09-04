@@ -8,21 +8,24 @@ import com.example.vocatest.repository.VocaListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class QuizService {
 
     private final QuizRepository quizRepository;
     private final VocaService vocaService;
-    private final VocaListRepository vocaListRepository;
 
     public QuizEntity saveQuizScore(Long vocalistId, String email, QuizDTO quizDTO) {
+
         VocaListEntity vocaListEntity = vocaService.findVocaListById(vocalistId);
-        if (vocaListEntity == null) {
-            throw new IllegalArgumentException("유효한 VocaList ID가 없음");
-        }
-        QuizEntity quizEntity = quizDTO.toEntity(vocaListEntity);
+
+        QuizEntity quizEntity = quizDTO.toEntity(email, vocaListEntity);
         return quizRepository.save(quizEntity);
     }
 
+    public List<QuizEntity> showAllQuizHistoryByEmail(String email) {
+        return quizRepository.findAllQuizHistoryByEmail(email);
+    }
 }

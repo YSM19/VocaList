@@ -45,7 +45,7 @@ public class QuizController implements QuizControllerDocs {
         return selectedVocaContents.subList(0, quizcount.intValue()); 
     }
 
-    @PostMapping("/{vocalistId}")
+    @PostMapping("/history/{vocalistId}")
     public ResponseEntity<QuizEntity> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
                                                           @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                           @RequestBody QuizDTO quizDTO) {
@@ -58,6 +58,23 @@ public class QuizController implements QuizControllerDocs {
             log.info("로그인 되어있지 않음.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<QuizEntity>> showHistory(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
+        String email = customOAuth2User.getAttribute("email");
+        if (email == null) {
+            log.info("email아 존재하지 않습니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        List<QuizEntity> quizEntity = quizService.showAllQuizHistoryByEmail(email);
+
+        if (quizEntity == null) {
+            log.info("보여줄 QuizScore History 값이 없음");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(quizEntity);
 
     }
 }
