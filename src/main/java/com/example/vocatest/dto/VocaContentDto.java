@@ -17,8 +17,6 @@ public class VocaContentDto {
     @Schema(description = "예문", example = "I eat apple")
     private String sampleSentence;
 
-    private VocaListEntity vocaListEntity;
-
     public VocaContentEntity toEntity(VocaListEntity vocaListEntity){
         return new VocaContentEntity(text, transtext, sampleSentence, vocaListEntity);
     }

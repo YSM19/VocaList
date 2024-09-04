@@ -18,25 +18,24 @@ import java.util.List;
 public interface VocaContentControllerDocs {
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "vocalistId", description = "단어장 id 값"),
     })
     @Operation(summary = "단어 조회", description = "특정 단어장에 있는 모든 단어를 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "단어 조회 성공"),
             @ApiResponse(responseCode = "400", description = "단어 조회 실패")
     })
-    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("id") Long id);
-
+    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId);
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "vocalistId", description = "단어장 id 값"),
     })
     @Operation(summary = "단어 등록", description = "단어를 등록합니다. <br><br> 필요 파라미터 : 단어, 단어 해석")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "단어 등록 성공"),
             @ApiResponse(responseCode = "400", description = "단어 등록 실패")
     })
-    public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("id") Long id, @RequestBody VocaContentDto vocaContentDto);
+    public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("vocalistId") Long vocalistId, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
             @Parameter(name = "id", description = "단어장 id 값"),
@@ -47,7 +46,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 수정 성공"),
             @ApiResponse(responseCode = "400", description = "단어 수정 실패")
     })
-    public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("id")Long id, @PathVariable("wordid") Long wordid, @RequestBody VocaContentDto vocaContentDto);
+    public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid") Long wordid, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
             @Parameter(name = "id", description = "단어장 id 값"),
@@ -58,7 +57,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "단어 삭제 실패")
     })
-    public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("id")Long id, @PathVariable("wordid")Long wordid);
+    public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid")Long wordid);
 
     @Parameters(value = {
             @Parameter(name = "wordid", description = "단어 id 값")

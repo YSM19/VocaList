@@ -29,16 +29,16 @@ public class UserController implements UserControllerDocs {
        return userService.findAllUsers();
     }
 
-    @GetMapping("/{id}")// 특정 id 사용자 조회
-    public ResponseEntity<UserEntity> findUserById(@PathVariable("id")Long id){
-        UserEntity findUser = userService.findUserById(id);
+    @GetMapping("/{userId}")// 특정 id 사용자 조회
+    public ResponseEntity<UserEntity> findUserById(@PathVariable("userId")Long userId){
+        UserEntity findUser = userService.findUserById(userId);
 
         return ResponseEntity.ok(findUser);
     }
 
-    @DeleteMapping("{id}")//특정 id 사용자 삭제
-    public ResponseEntity<UserEntity> delete(@PathVariable("id")Long id){
-        UserEntity userEntity = userService.findUserById(id);
+    @DeleteMapping("{userId}")//특정 id 사용자 삭제
+    public ResponseEntity<UserEntity> delete(@PathVariable("userId")Long userId){
+        UserEntity userEntity = userService.findUserById(userId);
         if (userEntity == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

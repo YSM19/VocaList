@@ -21,33 +21,33 @@ import java.util.List;
 public interface UserVocaListControllerDocs {
     @Operation(summary = "사용자의 단어장 조회", description = "로그인 되어 있는 사용자가 가지고 있는 단어장을 모두 조회합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단어장 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "단어장 조회 실패")
+            @ApiResponse(responseCode = "200", description = "사용자의 단어장 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "사용자의 단어장 조회 실패")
     })
 
     @GetMapping()
     public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User);
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "uservocalistId", description = "사용자의 단어장 id 값"),
     })
     @Operation(summary = "단어장 받아오기", description = "공개 되어있는 다른 사용자의 단어장을 받아옵니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단어장 받아오기 성공"),
-            @ApiResponse(responseCode = "400", description = "단어장 받아오기 실패")
+            @ApiResponse(responseCode = "200", description = "사용자의 단어장 받아오기 성공"),
+            @ApiResponse(responseCode = "400", description = "사용자의 단어장 받아오기 실패")
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("id")Long id);
+    @GetMapping("/{uservocalistId}")
+    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("uservocalistId")Long uservocalistId);
 
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "uservocalistId", description = "사용자의 단어장 id 값"),
     })
     @Operation(summary = "사용자가 가지고 있는 특정 단어장 삭제", description = "사용자가 가지고 있는 특정 단어장을 삭제합니다.")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단어장 삭제 성공"),
-            @ApiResponse(responseCode = "400", description = "단어장 삭제 실패")
+            @ApiResponse(responseCode = "200", description = "사용자의 단어장 삭제 성공"),
+            @ApiResponse(responseCode = "400", description = "사용자의 단어장 삭제 실패")
     })
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("id")Long id);
+    @DeleteMapping("/delete/{uservocalistId}")
+    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("uservocalistId")Long uservocalistId);
 }

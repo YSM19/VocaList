@@ -30,9 +30,9 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
         return openedVocaListEntity;
     }
 
-    @GetMapping("{id}") // 선택한 단어장 조회
-    public VocaListEntity findVocaListById(@PathVariable("id")Long id){
-        return vocaService.findVocaListById(id);
+    @GetMapping("{vocalistId}") // 선택한 단어장 조회
+    public VocaListEntity findVocaListById(@PathVariable("vocalistId")Long vocalistId){
+        return vocaService.findVocaListById(vocalistId);
     }
 
     @PostMapping //단어장 생성
@@ -50,13 +50,13 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     }
 
-    @PatchMapping("{id}") // 단어장 수정
-    public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("id")Long id,
+    @PatchMapping("{vocalistId}") // 단어장 수정
+    public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("vocalistId")Long vocalistId,
                                                          @RequestBody VocaListDto vocaListDto,
                                                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User){
         if (customOAuth2User != null){
             String email = customOAuth2User.getAttribute("email");
-            VocaListEntity updatedVocaList = vocaService.updateVocaListById(id, vocaListDto, email);
+            VocaListEntity updatedVocaList = vocaService.updateVocaListById(vocalistId, vocaListDto, email);
             if (updatedVocaList != null) {
                 return ResponseEntity.status(HttpStatus.OK).body(updatedVocaList);
             }
@@ -64,9 +64,9 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("id")Long id){ // 단어장 삭제
-        VocaListEntity vocaListEntity = vocaService.findVocaListById(id);
+    @DeleteMapping("{vocalistId}")
+    public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("vocalistId")Long vocalistId){ // 단어장 삭제
+        VocaListEntity vocaListEntity = vocaService.findVocaListById(vocalistId);
         if(vocaListEntity == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -74,18 +74,18 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping("{id}/editsecret/open") // 단어장 공개 설정
+    @GetMapping("{vocalistId}/editsecret/open") // 단어장 공개 설정
     public String openVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                                   @PathVariable("id")Long id){
+                                   @PathVariable("vocalistId")Long vocalistId){
         String email = customOAuth2User.getAttribute("email");
-        String authorEmail = vocaService.findVocaListById(id).getAuthor();
+        String authorEmail = vocaService.findVocaListById(vocalistId).getEmail();
         log.info("접근하는 유저의 이메일 " + email);
-        log.info("단어장 저자의 이메일 " + vocaService.findVocaListById(id).getAuthor());
+        log.info("단어장 저자의 이메일 " + vocaService.findVocaListById(vocalistId).getEmail());
 
         if (email != null && email.equals(authorEmail)) {
             log.info("수정 가능한 이용자");
-            vocaService.findVocaListById(id).setSecret(1); // 공개로 설정함.
-            vocaService.saveVocaList(findVocaListById(id));// 저장
+            vocaService.findVocaListById(vocalistId).setSecret(1); // 공개로 설정함.
+            vocaService.saveVocaList(findVocaListById(vocalistId));// 저장
             log.info("공개 설정 완료 db확인");
             return("공개설정 완료");
         } else {
@@ -95,17 +95,17 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     }
 
-    @GetMapping("{id}/editsecret/close") //단어장 비공개 설정
-    public String closeVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("id")Long id){
+    @GetMapping("{vocalistId}/editsecret/close") //단어장 비공개 설정
+    public String closeVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("vocalistId")Long vocalistId){
         String email = customOAuth2User.getAttribute("email");
-        String authorEmail = vocaService.findVocaListById(id).getAuthor();
+        String authorEmail = vocaService.findVocaListById(vocalistId).getEmail();
         log.info("접근하는 유저의 이메일 " + email);
-        log.info("단어장 저자의 이메일 " + vocaService.findVocaListById(id).getAuthor());
+        log.info("단어장 저자의 이메일 " + vocaService.findVocaListById(vocalistId).getEmail());
 
         if (email != null && email.equals(authorEmail)) {
             log.info("수정 가능한 이용자");
-            vocaService.findVocaListById(id).setSecret(0); // 비공개로 설정함.
-            vocaService.saveVocaList(findVocaListById(id));// 저장
+            vocaService.findVocaListById(vocalistId).setSecret(0); // 비공개로 설정함.
+            vocaService.saveVocaList(findVocaListById(vocalistId));// 저장
             log.info("비공개 설정 완료 db확인");
             return("비공개 설정 완료");
         } else {
@@ -113,10 +113,5 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
             return("수정 가능한 이용자가 아니거나 로그인 되어있지 않음.");
         }
     }
-
-
-//    {
-//  "title": "chinese"
-//    }
 
 }

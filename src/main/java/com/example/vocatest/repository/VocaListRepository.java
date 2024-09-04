@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface VocaListRepository extends JpaRepository<VocaListEntity, Long> {
       List<VocaListEntity> findBySecret(int secret);
+      List<VocaListEntity> findByEmail(String email);
 }
