@@ -2,9 +2,11 @@ package com.example.vocatest.service;
 
 import com.example.vocatest.dto.VocaContentDto;
 import com.example.vocatest.dto.VocaListDto;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.entity.VocaListEntity;
+import com.example.vocatest.repository.UserRepository;
 import com.example.vocatest.repository.UserVocaListRepository;
 import com.example.vocatest.repository.VocaContentRepository;
 import com.example.vocatest.repository.VocaListRepository;
@@ -24,19 +26,18 @@ public class VocaService {
     private final VocaContentRepository vocaContentRepository;
     private final UserVocaListRepository userVocaListRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     //    --------------------------단어장-------------------------
     // create
-    public VocaListEntity createVocaList (String email, VocaListDto vocaListDto){
+    public VocaListEntity createVocaList(String email, VocaListDto vocaListDto){
         // VocaList 생성
         VocaListEntity vocaListEntity = vocaListDto.toEntity(email);
-        vocaListRepository.save(vocaListEntity);
+        saveVocaList(vocaListEntity);
 
         // UserVocaList 생성
-        UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
-        userVocaListEntity.setUserEntity(userService.findUserByEmail(email));
-        userVocaListEntity.setVocaListEntity(vocaListEntity);
-        userVocaListRepository.save(userVocaListEntity);
+        UserEntity userEntity = userService.findUserByEmail(email);
+        saveUserVocaList(vocaListEntity, userEntity);
 
         return vocaListEntity;
     }
@@ -47,16 +48,16 @@ public class VocaService {
     }
 
     // read
-    public List<VocaListEntity> findAllVocaList(){
-        return vocaListRepository.findAll();
-    }
+//    public List<VocaListEntity> findAllVocaList(){
+//        return vocaListRepository.findAll();
+//    }
 
     public List<VocaListEntity> findSecretVocaList(int secret){
         return vocaListRepository.findBySecret(secret);
     }
 
-    public VocaListEntity findVocaListById(Long id){
-            return vocaListRepository.findById(id).orElse(null);
+    public VocaListEntity findVocaListById(Long vocalistId){
+            return vocaListRepository.findById(vocalistId).orElse(null);
     }
 
     public List<VocaListEntity> findVocaListByEmail(String email){
@@ -76,7 +77,7 @@ public class VocaService {
     }
 
     // delete
-    public void deleteVocaList(VocaListEntity vocaListEntity){ 
+    public void deleteVocaList(VocaListEntity vocaListEntity){
         vocaListRepository.delete(vocaListEntity);
     }
 
@@ -107,6 +108,7 @@ public class VocaService {
         if (target == null) {
             throw new IllegalArgumentException("유효한 Word ID가 없음");
         }
+
         target.setText(vocaContentDto.getText());
         target.setTranstext(vocaContentDto.getTranstext());
         target.setSampleSentence(vocaContentDto.getSampleSentence());
@@ -118,6 +120,11 @@ public class VocaService {
         vocaContentRepository.delete(vocaContentEntity);
     }
 
+    public void deleteAllVocaContentByVocaListId(Long vocaListId){
+        List<VocaContentEntity> vocaContentEntityList = vocaContentRepository.findByVocaListEntityId(vocaListId);
+        vocaContentRepository.deleteAll(vocaContentEntityList);
+    }
+
     // save
     public VocaContentEntity saveVocaContent(VocaContentEntity vocaContentEntity){
         return vocaContentRepository.save(vocaContentEntity);
@@ -126,42 +133,39 @@ public class VocaService {
     //--------------------유저가 보유한 단어장 처리 메소드--------------------------
 
     // create
+    public UserVocaListEntity createUserVocaList(String userEmail, Long vocalistId) {
+
+        // 단어장 생성
+        VocaListEntity originalVocaListEntity = findVocaListById(vocalistId);
+        VocaListEntity newVocaListEntity = VocaListDto.createVocaListToEntity(originalVocaListEntity, userEmail);
+        vocaListRepository.save(newVocaListEntity);
+
+        // 단어장에 들어가야할 단어 리스트
+        List<VocaContentEntity> selectedAllVocaContent = vocaContentRepository.findByVocaListEntityId(vocalistId);
+        for (VocaContentEntity vocaContentEntity : selectedAllVocaContent) {
+            VocaContentEntity newVocaContent = new VocaContentEntity();
+            newVocaContent.setText(vocaContentEntity.getText());
+            newVocaContent.setTranstext(vocaContentEntity.getTranstext());
+            newVocaContent.setSampleSentence(vocaContentEntity.getSampleSentence());
+            newVocaContent.setVocaListEntity(newVocaListEntity);
+
+            vocaContentRepository.save(newVocaContent);
+        }
+
+        // UserVocaList 생성
+        UserEntity userEntity = userService.findUserByEmail(userEmail);
+
+        return saveUserVocaList(originalVocaListEntity, userEntity);
+    }
+
     public UserVocaListEntity saveUserVocaList(UserVocaListEntity userVocaListEntity){
         return userVocaListRepository.save(userVocaListEntity);
     }
 
-    public UserVocaListEntity createUserVocaList(String userEmail, Long id) {
-
-        // 단어장에 들어가야할 단어 리스트
-        VocaListEntity originalVocaListEntity = vocaListRepository.findById(id).orElse(null);
-
-        VocaListEntity createVocaListEntity = VocaListDto.createVocaListToEntity(originalVocaListEntity, userEmail);
-
-//        VocaListEntity createVocaListEntity = new VocaListEntity();
-//        createVocaListEntity.setAuthor(originalVocaListEntity.getAuthor());
-//        createVocaListEntity.setTitle(originalVocaListEntity.getTitle());
-//        createVocaListEntity.setCount(0L);
-        vocaListRepository.save(createVocaListEntity);
-
-        List<VocaContentEntity> selectedAllVocaContent = vocaContentRepository.findByVocaListEntityId(id);
-
-        for (VocaContentEntity vocaContentEntity : selectedAllVocaContent) {
-            VocaContentEntity createVocaContentEntity = new VocaContentEntity();
-            createVocaContentEntity.setText(vocaContentEntity.getText());
-            createVocaContentEntity.setTranstext(vocaContentEntity.getTranstext());
-            createVocaContentEntity.setVocaListEntity(createVocaListEntity);
-
-            vocaContentRepository.save(createVocaContentEntity);
-        }
-
-        // UserVocaList 생성
+    public UserVocaListEntity saveUserVocaList(VocaListEntity vocaListEntity, UserEntity userEntity){
         UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
-        userVocaListEntity.setVocaListEntity(createVocaListEntity);
-        userVocaListEntity.setUserEntity(userService.findUserByEmail(userEmail));
-//        originalVocaListEntity.addCount(1L); // 불러온 count 증가
-        saveVocaList(originalVocaListEntity);
-
-
+        userVocaListEntity.setUserEntity(userEntity);
+        userVocaListEntity.setVocaListEntity(vocaListEntity);
         return userVocaListRepository.save(userVocaListEntity);
     }
 
@@ -171,9 +175,9 @@ public class VocaService {
     }
 
 
-    public UserVocaListEntity getUserVocaListId(Long title){
-        return userVocaListRepository.findByVocaListEntityId(title);
-    }
+//    public UserVocaListEntity getUserVocaListId(Long title){
+//        return userVocaListRepository.findByVocaListEntityId(title);
+//    }
 
     // delete
     public void deleteUserVocaList(Long id){
@@ -185,7 +189,18 @@ public class VocaService {
 
     }
 
-    //-------------------퀴즈 관련 메소드---------------------------
+    public void deleteAllUserVocaListByvocalistId(Long vocalistId){
+        List<UserVocaListEntity> target = userVocaListRepository.findAllByVocaListEntity_Id(vocalistId);
+        if (target != null) {
+            userVocaListRepository.deleteAll(target);
+        }
+    }
 
+    public void deleteAllUserVocaListByuserId(Long userId){
+        List<UserVocaListEntity> target = userVocaListRepository.findAllByUserEntity_Id(userId);
+        if (target != null) {
+            userVocaListRepository.deleteAll(target);
+        }
+    }
 
 }

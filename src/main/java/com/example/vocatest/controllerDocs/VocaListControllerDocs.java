@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "조회 실패", content = @Content(schema = @Schema(implementation = ApiCommonResponse.class))) })
     @Operation(summary = "모든 단어장 조회", description = "모든 단어장의 리스트를 조회합니다.")
     @GetMapping
-    public List<VocaListEntity> findAllVocaList();
+    public ResponseEntity<List<VocaListEntity>> findAllVocaList();
 
     @Parameters(value = {
             @Parameter(name = "vocalistId", description = "단어장 id 값"),
@@ -38,7 +37,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "조회 실패")
     })
     @GetMapping("{vocalistId}") // 선택한 단어장 보기
-    public VocaListEntity findVocaListById(@PathVariable("vocalistId")Long vocalistId);
+    public ResponseEntity<VocaListEntity> findVocaListById(@PathVariable("vocalistId")Long vocalistId);
 
 
     @Operation(summary = "단어장 생성", description = "단어장을 생성합니다. <br><br> 필요 파라미터 : 단어장 제목")
@@ -71,10 +70,10 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "삭제 실패")
     })
     @DeleteMapping("{vocalistId}")
-    public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("vocalistId")Long vocalistId);
+    public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("vocalistId")Long vocalistId, @AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "vocalistId", description = "단어장 id 값"),
     })
     @Operation(summary = "공개 설정", description = "특정 단어장을 다른 사용자가 볼 수 있도록 공개합니다.")
     @ApiResponses({
@@ -82,7 +81,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "공개 설정 실패")
     })
     @GetMapping("{vocalistId}/editsecret/open")
-    public String openVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("vocalistId")Long vocalistId);
+    public ResponseEntity<String> openVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("vocalistId")Long vocalistId);
 
     @Parameters(value = {
             @Parameter(name = "vocalistId", description = "단어장 id 값"),
@@ -93,6 +92,6 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "비공개 설정 실패")
     })
     @GetMapping("{vocalistId}/editsecret/close")
-    public String closeVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("vocalistId")Long vocalistId);
+    public ResponseEntity<String> closeVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("vocalistId")Long vocalistId);
 
 }
