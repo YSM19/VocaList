@@ -46,15 +46,15 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     }
 
     @GetMapping() // 유저가 가지고 있는 단어장 보여주기
-    public List<UserVocaListEntity> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public ResponseEntity<List<UserVocaListEntity>> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User) {
         if (oAuth2User != null) {
             String email = oAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
 
-            return vocaService.getUserVocaList(email);
+            return ResponseEntity.ok(vocaService.getUserVocaList(email));
         } else {
             log.info("No user logged in");
-            return null;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
@@ -62,7 +62,6 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     @DeleteMapping("/delete/{uservocalistId}")
     public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                      @PathVariable("uservocalistId")Long uservocalistId){ //유저가 가지고 있는 단어장 삭제 메소드
-
         if (oAuth2User == null) {
             log.info("No user logged in");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

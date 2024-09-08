@@ -49,7 +49,7 @@ public interface VocaContentControllerDocs {
     public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid") Long wordid, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
-            @Parameter(name = "id", description = "단어장 id 값"),
+            @Parameter(name = "vocalistId", description = "단어장 id 값"),
             @Parameter(name = "wordid", description = "단어 id 값"),
     })
     @Operation(summary = "단어 삭제", description = "단어를 삭제합니다.")

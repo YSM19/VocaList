@@ -65,5 +65,5 @@ public interface UserControllerDocs {
             @ApiResponse(responseCode = "200", description = "유저정보 받아오기 성공", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "유저정보 받아오기 실패", content = @Content(mediaType = "application/json"))
     })
-    public UserEntity getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
+    public ResponseEntity<UserEntity> getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 }
