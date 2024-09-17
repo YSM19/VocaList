@@ -26,6 +26,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+
+        // 인증을 건너뛸 경로 설정
+        if (path.equals("/login") || path.equals("/loginForm") || path.equals("/api/vocalist") || path.startsWith("/api/vocacontent/word/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
 //        *original
         String authorization = null;
         Cookie[] cookies = request.getCookies();
