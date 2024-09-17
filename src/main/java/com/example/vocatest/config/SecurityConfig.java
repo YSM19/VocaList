@@ -32,14 +32,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf((csrf) -> csrf.disable());
-
-        http
+                .csrf((csrf) -> csrf.disable())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .permitAll());
-
-        http
+                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
 
@@ -56,18 +52,19 @@ public class SecurityConfig {
 
                 );
 
-        // *original
-        http
-                .authorizeHttpRequests((auth) -> auth
-                        .anyRequest().permitAll());
-
-        // *change
-//        //경로별 인가 작업
+//        // *original
 //        http
 //                .authorizeHttpRequests((auth) -> auth
+//                        .anyRequest().permitAll());
+
+        // *change
+        //경로별 인가 작업
+        http
+                .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
-//                        .anyRequest().authenticated());
-//        // */
+                        .requestMatchers("/", "/login", "/api/vocalist", "/api/vocacontent/word/{wordid}").permitAll()
+                        .anyRequest().authenticated());
+        // */
 
         http
                 .sessionManagement((session) -> session
@@ -82,7 +79,7 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
 //                        AWS 버전
-                        configuration.setAllowedOrigins(Collections.singletonList("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000"));
+                        configuration.setAllowedOrigins(Collections.singletonList("http://ec2-52-78-64-218.ap-northeast-2.compute.amazonaws.com:3000"));
 //                        Local 버전
 //                        configuration.setAllowedOrigins(Collections.singletonList("*"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
@@ -94,7 +91,8 @@ public class SecurityConfig {
 //                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
                         // original
-                        configuration.setExposedHeaders(Collections.singletonList("*"));
+//                        configuration.setExposedHeaders(Collections.singletonList("*"));
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;
                     }

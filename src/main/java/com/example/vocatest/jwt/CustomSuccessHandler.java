@@ -44,7 +44,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie("Authorization", token));
         response.setStatus(HttpStatus.OK.value());
         //*aws*
-        response.sendRedirect("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
+        response.sendRedirect("http://ec2-52-78-64-218.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
         // */
 
 //        //*change*
@@ -64,6 +64,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        // */
 
     }
+
 
     private Cookie createCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
