@@ -22,20 +22,21 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     private final VocaService vocaService;
 
-    @GetMapping
+    @GetMapping("/showall")
     public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
 //        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
         List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
         return ResponseEntity.ok(openedVocaListEntity);
     }
 
-    @GetMapping("{vocalistId}") // 선택한 단어장 조회
+    @GetMapping("/show/{vocalistId}") // 선택한 단어장 조회
     public ResponseEntity<VocaListEntity> findVocaListById(@PathVariable("vocalistId")Long vocalistId){
         VocaListEntity vocaListEntity = vocaService.findVocaListById(vocalistId);
         return ResponseEntity.ok(vocaListEntity);
     }
 
-    @PostMapping //단어장 생성
+    //단어장 생성
+    @PostMapping("/create")
     public ResponseEntity<VocaListEntity> createVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                          @RequestBody VocaListDto vocaListDto){
         if (customOAuth2User != null){
@@ -50,7 +51,7 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     }
 
-    @PatchMapping("{vocalistId}") // 단어장 수정
+    @PatchMapping("/modify/{vocalistId}") // 단어장 수정
     public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("vocalistId")Long vocalistId,
                                                          @RequestBody VocaListDto vocaListDto,
                                                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User){
@@ -64,7 +65,7 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
-    @DeleteMapping("{vocalistId}") // 단어장 삭제
+    @DeleteMapping("/delete/{vocalistId}") // 단어장 삭제
     public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("vocalistId")Long vocalistId,
                                                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User){ // 단어장 삭제
         // 로그인 여부
@@ -89,7 +90,7 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping("{vocalistId}/editsecret/open") // 단어장 공개 설정
+    @GetMapping("/{vocalistId}/editsecret/open") // 단어장 공개 설정
     public ResponseEntity<String> openVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                      @PathVariable("vocalistId")Long vocalistId){
 
@@ -111,7 +112,7 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     }
 
-    @GetMapping("{vocalistId}/editsecret/close") //단어장 비공개 설정
+    @GetMapping("/{vocalistId}/editsecret/close") //단어장 비공개 설정
     public ResponseEntity<String> closeVocaListSecret(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                       @PathVariable("vocalistId")Long vocalistId){
 
