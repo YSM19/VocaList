@@ -19,7 +19,7 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
     private final VocaService vocaService;
 
     // create
-    @PostMapping("/{vocalistId}/word")
+    @PostMapping("/create/{vocalistId}")
     public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("vocalistId") Long vocalistId,
                                                             @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
 
@@ -28,13 +28,13 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
     }
 
     // read
-    @GetMapping("{vocalistId}/word")
+    @GetMapping("/showall/{vocalistId}")
     public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId) { //단어장에 있는 모든 단어 조회
         List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(vocalistId);
         return ResponseEntity.ok().body(vocas);
     }
 
-    @GetMapping("/word/{wordid}")// 특정 단어 조회
+    @GetMapping("/show/{wordid}")// 특정 단어 조회
     public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid){
         VocaContentEntity target = vocaService.getVocaContentId(wordid);
         if (target == null) {
@@ -44,7 +44,7 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
     }
 
     //update
-    @PatchMapping("/{vocalistId}/word/{wordid}")//단어수정
+    @PatchMapping("/modify/{vocalistId}/{wordid}") //단어수정
     public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("vocalistId")Long vocalistId,
                                                                @PathVariable("wordid") Long wordid,
                                                                @RequestBody VocaContentDto vocaContentDto){
@@ -54,7 +54,7 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
     }
 
     //delete
-    @DeleteMapping("{vocalistId}/word/{wordid}")//단어 삭제
+    @DeleteMapping("/delete/{vocalistId}/{wordid}")//단어 삭제
     public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid")Long wordid){
         VocaContentEntity target = vocaService.getVocaContentId(wordid);
 

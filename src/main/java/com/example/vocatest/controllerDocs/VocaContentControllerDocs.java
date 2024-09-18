@@ -9,8 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 조회 성공"),
             @ApiResponse(responseCode = "400", description = "단어 조회 실패")
     })
+    @GetMapping("/showall/{vocalistId}")
     public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId);
 
     @Parameters(value = {
@@ -35,6 +35,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 등록 성공"),
             @ApiResponse(responseCode = "400", description = "단어 등록 실패")
     })
+    @PostMapping("/create/{vocalistId}")
     public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("vocalistId") Long vocalistId, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
@@ -46,6 +47,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 수정 성공"),
             @ApiResponse(responseCode = "400", description = "단어 수정 실패")
     })
+    @PatchMapping("/modify/{vocalistId}/{wordid}")
     public ResponseEntity<VocaContentEntity> updateVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid") Long wordid, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
@@ -57,6 +59,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "단어 삭제 실패")
     })
+    @DeleteMapping("/delete/{vocalistId}/{wordid}")
     public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid")Long wordid);
 
     @Parameters(value = {
@@ -67,5 +70,6 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어 조회 성공"),
             @ApiResponse(responseCode = "400", description = "단어 조회 실패")
     })
+    @GetMapping("/show/{wordid}")
     public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid);
 }

@@ -25,7 +25,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "200", description = "모든 단어장 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = VocaListEntity.class)))),
             @ApiResponse(responseCode = "400", description = "조회 실패", content = @Content(schema = @Schema(implementation = ApiCommonResponse.class))) })
     @Operation(summary = "모든 단어장 조회", description = "모든 단어장의 리스트를 조회합니다.")
-    @GetMapping
+    @GetMapping("/showall")
     public ResponseEntity<List<VocaListEntity>> findAllVocaList();
 
     @Parameters(value = {
@@ -36,7 +36,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "400", description = "조회 실패")
     })
-    @GetMapping("{vocalistId}") // 선택한 단어장 보기
+    @GetMapping("/show/{vocalistId}") // 선택한 단어장 보기
     public ResponseEntity<VocaListEntity> findVocaListById(@PathVariable("vocalistId")Long vocalistId);
 
 
@@ -45,6 +45,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어장 생성 성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = VocaListEntity.class))),
             @ApiResponse(responseCode = "400", description = "생성 실패", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiCommonResponse.class))) }
     )
+    @PostMapping("/create")
     public ResponseEntity<VocaListEntity> createVocaList(
             @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
             @RequestBody VocaListDto vocaListDto) ;
@@ -57,7 +58,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "200", description = "단어장 수정 성공"),
             @ApiResponse(responseCode = "400", description = "단어장 수정 실패")
     })
-    @PatchMapping("{vocalistId}") // 단어장 수정
+    @PatchMapping("/modify/{vocalistId}") // 단어장 수정
     public ResponseEntity<VocaListEntity> updateVocaList(@PathVariable("vocalistId")Long vocalistId, @RequestBody VocaListDto vocaListDto, @AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 
 
@@ -69,7 +70,7 @@ public interface VocaListControllerDocs {
             @ApiResponse(responseCode = "200", description = "삭제 완료"),
             @ApiResponse(responseCode = "400", description = "삭제 실패")
     })
-    @DeleteMapping("{vocalistId}")
+    @DeleteMapping("/delete/{vocalistId}")
     public ResponseEntity<VocaListEntity> deleteVocaList(@PathVariable("vocalistId")Long vocalistId, @AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 
     @Parameters(value = {
