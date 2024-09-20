@@ -29,7 +29,9 @@ public class JwtFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // 인증을 건너뛸 경로 설정
-        if (path.equals("/login") || path.equals("/loginForm") || path.equals("/api/vocalist") || path.startsWith("/api/vocacontent/word/")) {
+        if (path.equals("/login") || path.equals("/loginForm")
+                || path.equals("/api/vocalist/showall") || path.equals("/api/vocalist/show/{vocalistId}")
+                || path.equals("/api/vocacontent/showall/{vocalistId}")) {
             filterChain.doFilter(request, response);
             return;
         }

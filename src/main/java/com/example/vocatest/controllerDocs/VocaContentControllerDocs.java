@@ -62,14 +62,14 @@ public interface VocaContentControllerDocs {
     @DeleteMapping("/delete/{vocalistId}/{wordid}")
     public ResponseEntity<VocaContentEntity> deleteVocaContent(@PathVariable("vocalistId")Long vocalistId, @PathVariable("wordid")Long wordid);
 
-    @Parameters(value = {
-            @Parameter(name = "wordid", description = "단어 id 값")
-    })
-    @Operation(summary = "특정 단어 조회", description = "특정 단어를 조회합니다.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단어 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "단어 조회 실패")
-    })
-    @GetMapping("/show/{wordid}")
-    public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid);
+//    @Parameters(value = {
+//            @Parameter(name = "wordid", description = "단어 id 값")
+//    })
+//    @Operation(summary = "특정 단어 조회", description = "특정 단어를 조회합니다.")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "단어 조회 성공"),
+//            @ApiResponse(responseCode = "400", description = "단어 조회 실패")
+//    })
+//    @GetMapping("/show/{wordid}")
+//    public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid);
 }

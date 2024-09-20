@@ -52,13 +52,13 @@ public interface UserControllerDocs {
     @DeleteMapping("{userId}")
     public ResponseEntity<UserEntity> delete(@PathVariable("userId")Long userId);
 
-    @Operation(summary = "로그아웃", description = "로그아웃")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "로그아웃 성공", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "400", description = "로그아웃 실패", content = @Content(mediaType = "application/json"))
-    })
-    @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response);
+//    @Operation(summary = "로그아웃", description = "로그아웃")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "로그아웃 성공", content = @Content(mediaType = "application/json")),
+//            @ApiResponse(responseCode = "400", description = "로그아웃 실패", content = @Content(mediaType = "application/json"))
+//    })
+//    @GetMapping("/logout")
+//    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response);
 
     @Operation(summary = "유저정보 받아오기", description = "로그인한 유저정보 받아오기")
     @ApiResponses({

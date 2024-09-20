@@ -62,7 +62,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/api/vocalist", "/api/vocacontent/word/{wordid}").permitAll()
+                        .requestMatchers("/", "/login", "/api/vocalist/showall", "api/vocalist/show/{vocalistId}",
+                                "/api/vocacontent/showall/{vocalistId}").permitAll()
                         .anyRequest().authenticated());
         // */
 

@@ -53,15 +53,15 @@ public class UserController implements UserControllerDocs {
     }
 
 
-    @GetMapping("/logout")//로그아웃
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
-        return ResponseEntity.ok("Logged out successfully");
-    }
+//    @GetMapping("/logout")//로그아웃
+//    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//
+//        return ResponseEntity.ok("Logged out successfully");
+//    }
 
     @GetMapping("/myuserdata")
     public ResponseEntity<UserEntity> getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
