@@ -34,14 +34,14 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
         return ResponseEntity.ok().body(vocas);
     }
 
-    @GetMapping("/show/{wordid}")// 특정 단어 조회
-    public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid){
-        VocaContentEntity target = vocaService.getVocaContentId(wordid);
-        if (target == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(target);
-    }
+//    @GetMapping("/show/{vocalistId}/{wordid}")// 특정 단어 조회
+//    public ResponseEntity<VocaContentEntity> showVocaContent(@PathVariable("wordid") Long wordid){
+//        VocaContentEntity target = vocaService.getVocaContentId(wordid);
+//        if (target == null) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(target);
+//    }
 
     //update
     @PatchMapping("/modify/{vocalistId}/{wordid}") //단어수정
