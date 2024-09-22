@@ -2,7 +2,6 @@
 
 단어장 웹 사이트
 
-
 ## 프로젝트 설명
 - 스프링 부트를 이용한 단어장 웹 사이트입니다.
 - 유저들이 직접 만든 단어장을 공유하여 다른 유저들도 해당 단어장을 이용할 수 있습니다.
@@ -17,9 +16,9 @@
 
 ## 기술 스택
   ### Backend 
-  - Java, Spring Boot, Spring Security - OAuth2.0, Spring JPA
+  - Java 21, Spring Boot 3.3, Spring Security - OAuth2.0, Spring JPA
   - Spring MVC, RESTful API
-  - MySQL
+  - MySQL 8
   - AWS ec2, rds, docker
 
 ## 구현 기능
