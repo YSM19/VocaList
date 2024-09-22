@@ -60,9 +60,11 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
           #            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
           script: |
-            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            sudo docker stop vocalist
+            # sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+            sudo docker stop backend
+            ## 종료된 이미지 삭제
             sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
-            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/vocalist
-            sudo docker-compose up -d
+            ## 사용하지 않는 이미지 삭제
             sudo docker image prune -a -f
+            sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/vocalist
+            sudo docker run -d --rm --name backend -p 8080:8080 "${{ secrets.DOCKER_USERNAME }}"/vocalist
