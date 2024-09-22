@@ -61,7 +61,7 @@ jobs:
           #            sudo docker run -d --log-driver=syslog -p 8081:8081 -e SPRING_PROFILES_ACTIVE=dev "${{ secrets.DOCKER_USERNAME }}"/runninghi-dev
           port: 22
           script: |
-            # sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+            sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             sudo docker stop backend
             ## 종료된 이미지 삭제
             # sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
