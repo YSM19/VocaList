@@ -9,6 +9,6 @@ public class VocatestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VocatestApplication.class, args);
-	} // ci/cd test6
+	} // ci/cd test7
 
 }
