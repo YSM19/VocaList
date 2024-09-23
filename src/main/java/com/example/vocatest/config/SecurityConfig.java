@@ -36,46 +36,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf((csrf) -> csrf.disable())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll())
-                .httpBasic((basic) -> basic.disable());
-
-
-        http
-                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-//              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
-
-
-        http
-                .oauth2Login((oauth2) -> oauth2
-                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(userService))
-                        .successHandler(customSuccessHandler)
-
-                );
-
-//        // *original
-//        http
-//                .authorizeHttpRequests((auth) -> auth
-//                        .anyRequest().permitAll());
-
-        // *change
-        //경로별 인가 작업
-        http
-                .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/api/vocalist/showall", "api/vocalist/show/{vocalistId}",
-                                "/api/vocacontent/showall/{vocalistId}").permitAll()
-                        .anyRequest().authenticated());
-        // */
-
-        http
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
 
                     @Override
@@ -93,15 +53,56 @@ public class SecurityConfig {
                         configuration.setMaxAge(3600L);
                         // 우리쪽 서버에서 보낼때
                         // change
-//                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-//                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
                         // original
-                        configuration.setExposedHeaders(Collections.singletonList("*"));
+//                        configuration.setExposedHeaders(Collections.singletonList("*"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;
                     }
                 }));
+
+        http
+                .csrf((csrf) -> csrf.disable())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll())
+                .httpBasic((basic) -> basic.disable());
+
+        // JWT Filter
+        http
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+//              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
+
+        // OAuth2
+        http
+                .oauth2Login((oauth2) -> oauth2
+                        .successHandler(customSuccessHandler)
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                            .userService(userService))
+
+                );
+
+//        // *original
+//        http
+//                .authorizeHttpRequests((auth) -> auth
+//                        .anyRequest().permitAll());
+
+        // *change
+        //경로별 인가 작업
+        http
+                .authorizeHttpRequests((auth) -> auth
+//                        .requestMatchers("/", "/reissue").permitAll()
+                        .requestMatchers("/", "/login", "/reissue", "/api/vocalist/showall", "api/vocalist/show/{vocalistId}",
+                                "/api/vocacontent/showall/{vocalistId}").permitAll()
+                        .anyRequest().authenticated());
+        // */
+
+        http
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
 
         return http.build();
     }
