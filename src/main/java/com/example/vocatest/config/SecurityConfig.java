@@ -42,17 +42,17 @@ public class SecurityConfig {
                         .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
-        // JWT Filter
+
         http
                 .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 //              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
 
-        // OAuth2
+
         http
                 .oauth2Login((oauth2) -> oauth2
-                        .successHandler(customSuccessHandler)
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                            .userService(userService))
+                                .userService(userService))
+                        .successHandler(customSuccessHandler)
 
                 );
 
