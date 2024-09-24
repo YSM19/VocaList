@@ -69,7 +69,7 @@ public class ReissueController {
         }
 
         // 새로운 JWT Token 생성
-        String newAccessToken = jwtUtil.createJwt("access", username, name, email, role, 60000L);
+        String newAccessToken = jwtUtil.createJwt("access", username, name, email, role, 1000*60*30L);
         String newRefreshToken  = jwtUtil.createJwt("refresh", username, name, email, role, 86400000L);
 
         // update refreshToken to Redis
