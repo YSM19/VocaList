@@ -85,7 +85,7 @@ public class ReissueController {
     private Cookie createCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(24*60*60); // 쿠키가 살아있을 시간
-        cookie.setPath("/");
+//        cookie.setPath("/");
         cookie.setHttpOnly(true);
 
         return cookie;
