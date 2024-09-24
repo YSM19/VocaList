@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -48,7 +47,7 @@ public class SecurityConfig {
                         configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
 //                        Local 버전
 //                        configuration.setAllowedOrigins(Collections.singletonList("*"));
-                        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
@@ -84,7 +83,7 @@ public class SecurityConfig {
                         .successHandler(customSuccessHandler)
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(userService))
-                        .permitAll()
+//                        .permitAll()
                 );
 
 //        // *original
@@ -97,7 +96,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/reissue", "/swagger-ui/**", "/swagger-resources/**",
+                        .requestMatchers("/", "/login", "/reissue",
                                 "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
                                 "/api/vocacontent/showall/{vocalistId}").permitAll()
                         .anyRequest().authenticated());
