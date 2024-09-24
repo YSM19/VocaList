@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
@@ -51,6 +53,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //*change*
 //        accessToken과 refreshToken 생성
         String accessToken = jwtUtil.createJwt("access", username, name, email, role, 1000*60*30L);
+        log.info("Access Token Expiration: " + (System.currentTimeMillis() + 1000*60*30L));
         String refreshToken = jwtUtil.createJwt("refresh", username, name, email, role, 86400000L);
 
         // redis에 insert (key = username / value = refreshToken)
