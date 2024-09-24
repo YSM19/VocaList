@@ -30,7 +30,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         CustomOAuth2User customUserDetail = (CustomOAuth2User) authentication.getPrincipal();
 
         // 토큰 생성시에 사용자명과 권한이 필요
-        String username = customUserDetail.getUsername();
+        String username = customUserDetail.getUserName();
         String name = customUserDetail.getName();
         String email = customUserDetail.getEmail();
 

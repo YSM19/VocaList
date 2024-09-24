@@ -1,25 +1,15 @@
 package com.example.vocatest.controller;
 
-import com.example.vocatest.controllerDocs.LogoutControllerDocs;
-import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.jwt.JwtUtil;
 import com.example.vocatest.redis_change.RedisService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
 
 @Controller

@@ -1,8 +1,6 @@
 package com.example.vocatest.controllerDocs;
 
-import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserVocaListEntity;
-import com.example.vocatest.entity.VocaListEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

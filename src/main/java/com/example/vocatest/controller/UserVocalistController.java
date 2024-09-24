@@ -1,9 +1,7 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.UserVocaListControllerDocs;
-import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserVocaListEntity;
-import com.example.vocatest.service.UserService;
 import com.example.vocatest.service.VocaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
