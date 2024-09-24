@@ -65,16 +65,16 @@ public class SecurityConfig {
 
         http
                 .csrf((csrf) -> csrf.disable())
-//                .formLogin((auth) -> auth.disable())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll())
+                .formLogin((auth) -> auth.disable())
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
 
         http
-//                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+//              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
 
 
         http
