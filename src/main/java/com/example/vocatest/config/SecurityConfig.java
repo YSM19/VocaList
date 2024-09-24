@@ -65,7 +65,10 @@ public class SecurityConfig {
 
         http
                 .csrf((csrf) -> csrf.disable())
-                .formLogin(form -> form
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .permitAll())
+                .oauth2Login((oauth2) -> oauth2
                         .loginPage("/login")
                         .permitAll())
                 .httpBasic((basic) -> basic.disable());
