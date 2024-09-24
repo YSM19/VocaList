@@ -24,7 +24,6 @@ import java.util.Iterator;
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
     private final RedisService redisService;
-//    private final RedisService redisService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -40,14 +39,14 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
 
-        //*original*
+//        //*original*
 //        String token = jwtUtil.createJwt(username, name, email, role, 1000*60*60*24*7L);
 ////        String token = jwtUtil.createJwt(username, name, email, role, 60*60*24L);
 //        response.addCookie(createCookie("Authorization", token));
 //        response.setStatus(HttpStatus.OK.value());
 //        //*aws*
 //        response.sendRedirect("http://ec2-52-78-64-218.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
-        // */
+//        // */
 
         //*change*
 //        accessToken과 refreshToken 생성
@@ -62,7 +61,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie("refresh", refreshToken));
         response.setStatus(HttpStatus.OK.value());
         //*aws*
-        response.sendRedirect("http://ec2-52-78-64-218.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
+        response.sendRedirect("http://ec2-52-79-241-189.ap-northeast-2.compute.amazonaws.com:3000");      // 로그인 성공시 프론트에 알려줄 redirect 경로
         // */
 
     }
