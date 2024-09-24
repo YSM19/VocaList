@@ -65,12 +65,10 @@ public class SecurityConfig {
 
         http
                 .csrf((csrf) -> csrf.disable())
+                .formLogin((auth) -> auth.disable())
 //                .formLogin(form -> form
 //                        .loginPage("/login")
 //                        .permitAll())
-                .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/login")
-                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
 
@@ -81,10 +79,11 @@ public class SecurityConfig {
 
         http
                 .oauth2Login((oauth2) -> oauth2
+                        .loginPage("/login")
                         .successHandler(customSuccessHandler)
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(userService))
-
+                        .permitAll()
                 );
 
 //        // *original
@@ -98,7 +97,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
                         .requestMatchers("/", "/login", "/reissue", "/swagger-ui/**", "/swagger-resources/**",
-                                "/api/vocalist/showall", "api/vocalist/show/{vocalistId}",
+                                "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
                                 "/api/vocacontent/showall/{vocalistId}").permitAll()
                         .anyRequest().authenticated());
         // */
