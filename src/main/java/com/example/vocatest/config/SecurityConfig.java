@@ -65,10 +65,10 @@ public class SecurityConfig {
 
         http
                 .csrf((csrf) -> csrf.disable())
-                .formLogin((auth) -> auth.disable())
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
+//                .formLogin((auth) -> auth.disable())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
 
@@ -79,7 +79,7 @@ public class SecurityConfig {
 
         http
                 .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/login")
+//                        .loginPage("/login")
                         .successHandler(customSuccessHandler)
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(userService))
