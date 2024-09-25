@@ -93,7 +93,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // 유효한지 확인 후 클라이언트로 상태 코드 응답
         try {
             if(jwtUtil.isExpired(originToken)) {
-                filterChain.doFilter(request, response);
+//                filterChain.doFilter(request, response);
 
                 PrintWriter writer = response.getWriter();
                 writer.println("access token expired");
