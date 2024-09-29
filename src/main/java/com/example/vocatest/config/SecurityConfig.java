@@ -39,9 +39,9 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .formLogin((auth) -> auth.disable())
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
 
 
