@@ -43,7 +43,7 @@ public class SecurityConfig {
 //                        .loginPage("/login")
 //                        .permitAll())
                 .httpBasic((basic) -> basic.disable());
-
+//
 
         http
                 .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
