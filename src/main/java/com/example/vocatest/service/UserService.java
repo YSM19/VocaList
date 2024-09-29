@@ -70,8 +70,8 @@ public class UserService extends DefaultOAuth2UserService {
             UserDTO userDTO = new UserDTO();
             userDTO.setUserName(existData.getUsername());
             userDTO.setName(oAuth2Response.getName());
-            userDTO.setEmail(existData.getEmail());
-            userDTO.setRole(existData.getRole());
+            userDTO.setEmail(oAuth2Response.getEmail());
+            userDTO.setRole("ROLE_USER");
 
             return new CustomOAuth2User(userDTO);
         }
