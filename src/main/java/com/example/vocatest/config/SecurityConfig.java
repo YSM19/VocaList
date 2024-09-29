@@ -37,6 +37,47 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                .csrf((csrf) -> csrf.disable())
+                .formLogin((auth) -> auth.disable())
+//                .formLogin(form -> form
+//                        .loginPage("/login")
+//                        .permitAll())
+                .httpBasic((basic) -> basic.disable());
+
+
+        http
+                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+//              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
+
+
+        http
+                .oauth2Login((oauth2) -> oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(userService))
+                        .successHandler(customSuccessHandler)
+                );
+
+//        // *original
+//        http
+//                .authorizeHttpRequests((auth) -> auth
+//                        .anyRequest().permitAll());
+
+        // *change
+        //경로별 인가 작업
+        http
+                .authorizeHttpRequests((auth) -> auth
+//                        .requestMatchers("/", "/reissue").permitAll()
+                        .requestMatchers("/", "/login", "/reissue",
+                                "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
+                                "/api/vocacontent/showall/{vocalistId}").permitAll()
+                        .anyRequest().authenticated());
+        // */
+
+        http
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
 
                     @Override
@@ -63,48 +104,6 @@ public class SecurityConfig {
                         return configuration;
                     }
                 }));
-
-        http
-                .csrf((csrf) -> csrf.disable())
-                .formLogin((auth) -> auth.disable())
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
-                .httpBasic((basic) -> basic.disable());
-
-
-        http
-                .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-//              .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class);
-
-
-        http
-                .oauth2Login((oauth2) -> oauth2
-//                        .loginPage("/login") /
-                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(userService))
-                        .successHandler(customSuccessHandler)
-                );
-
-//        // *original
-//        http
-//                .authorizeHttpRequests((auth) -> auth
-//                        .anyRequest().permitAll());
-
-        // *change
-        //경로별 인가 작업
-        http
-                .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/reissue",
-                                "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
-                                "/api/vocacontent/showall/{vocalistId}").permitAll()
-                        .anyRequest().authenticated());
-        // */
-
-        http
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
