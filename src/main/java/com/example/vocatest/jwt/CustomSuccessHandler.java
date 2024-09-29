@@ -58,6 +58,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //*change*
 //        accessToken과 refreshToken 생성
         String accessToken = jwtUtil.createJwt("access", username, name, email, role, 1000*60*30L);
+        log.info("currentTime: " + System.currentTimeMillis());
         log.info("Access Token Expiration: " + (System.currentTimeMillis() + 1000*60*30L));
         String refreshToken = jwtUtil.createJwt("refresh", username, name, email, role, 86400000L);
 
