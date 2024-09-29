@@ -54,9 +54,9 @@ public class SecurityConfig {
         http
                 .oauth2Login((oauth2) -> oauth2
 //                        .loginPage("/login") /
-                        .successHandler(customSuccessHandler)
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(userService))
+                        .successHandler(customSuccessHandler)
                 );
 
 //        // *original
@@ -69,7 +69,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/reissue", "/swagger-ui/**",
+                        .requestMatchers("/", "/login", "/reissue",
                                 "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
                                 "/api/vocacontent/showall/{vocalistId}").permitAll()
                         .anyRequest().authenticated());
