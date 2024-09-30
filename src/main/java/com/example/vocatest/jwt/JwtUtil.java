@@ -49,7 +49,7 @@ public class JwtUtil {
     }
 
     // JWT 발급
-//     *orignial*
+////     *orignial*
 //    public String createJwt(/*String category,*/ String username, String name, String email, String role, Long expiredMs) {
 //        return Jwts.builder()
 ////                .claim("category", category)
@@ -63,7 +63,7 @@ public class JwtUtil {
 //                .compact();
 //    }
 
-    //*change
+        //*change
     // JWT 발급
     public String createJwt(String category, String username, String name, String email, String role, Long expiredMs) {
         return Jwts.builder()

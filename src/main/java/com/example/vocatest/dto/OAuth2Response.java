@@ -12,5 +12,5 @@ public interface OAuth2Response {
 
     String getName();
 
-//    Map<String, Object> getAttributes();
+    Map<String, Object> getAttributes();
 }
