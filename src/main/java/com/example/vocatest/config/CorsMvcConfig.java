@@ -15,8 +15,8 @@
 //    public void addCorsMappings(CorsRegistry corsRegistry) {
 //
 //        corsRegistry.addMapping("/**")
-////                .allowedOrigins(frontUrl)
-//                .allowedOrigins("*")
+//                .allowedOrigins(frontUrl)
+////                .allowedOrigins("*")
 //                .allowedMethods("GET", "POST", "PUT", "DELETE")
 //                .allowedHeaders("*")
 //                .allowCredentials(true);

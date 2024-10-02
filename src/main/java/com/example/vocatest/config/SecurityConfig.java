@@ -87,7 +87,8 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
 //                        AWS 버전
-                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
+//                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
+                        configuration.setAllowedOrigins(Collections.singletonList("*"));
 //                        Local 버전
 //                        configuration.setAllowedOrigins(Collections.singletonList("*"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
