@@ -87,9 +87,9 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
 //                        AWS 버전
-                        configuration.setAllowedOrigins(Collections.singletonList("http://ec2-52-78-64-218.ap-northeast-2.compute.amazonaws.com:3000"));
+                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
 //                        configuration.setAllowedOrigins(Collections.singletonList("*"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
