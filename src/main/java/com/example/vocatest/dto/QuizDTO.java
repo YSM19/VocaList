@@ -1,6 +1,7 @@
 package com.example.vocatest.dto;
 
 import com.example.vocatest.entity.QuizEntity;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.VocaListEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class QuizDTO {
     @Schema(description = "퀴즈를 푼 날짜", example = "2024-09-04")
     private Date date;
 
-    public QuizEntity toEntity(String email, VocaListEntity vocaListEntity) {
-        return new QuizEntity(email, score, date, vocaListEntity);
+    public QuizEntity toEntity(UserEntity userEntity, VocaListEntity vocaListEntity) {
+        return new QuizEntity(userEntity, score, date, vocaListEntity);
     }
 }
