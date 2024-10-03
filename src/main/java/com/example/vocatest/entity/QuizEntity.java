@@ -18,11 +18,7 @@ public class QuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    private String email;
-    @Schema(description = "유저 참조값")
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private String email;
 
     private int score;
 
@@ -33,8 +29,8 @@ public class QuizEntity {
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
-    public QuizEntity(UserEntity userEntity, int score, Date date, VocaListEntity vocaListEntity) {
-        this.userEntity = userEntity;
+    public QuizEntity(String email, int score, Date date, VocaListEntity vocaListEntity) {
+        this.email = email;
         this.score = score;
         this.date = date;
         this.vocaListEntity = vocaListEntity;
