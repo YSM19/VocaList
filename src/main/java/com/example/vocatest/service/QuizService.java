@@ -5,7 +5,6 @@ import com.example.vocatest.entity.QuizEntity;
 import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.repository.QuizRepository;
-import com.example.vocatest.repository.VocaListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,6 @@ public class QuizService {
     }
 
     public List<QuizEntity> showAllQuizHistoryByEmail(String email) {
-        return quizRepository.findAllQuizHistoryByEmail(email);
+        return quizRepository.findAllyByEmail(email);
     }
 }
