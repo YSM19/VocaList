@@ -110,7 +110,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // accessToken인지 refreshToken인지 확인
         String category = jwtUtil.getCategory(originToken);
-        System.out.println(category);
 
         // JWTFilter는 요청에 대해 accessToken만 취급하므로 access인지 확인
         if(!"access".equals(category)) {
