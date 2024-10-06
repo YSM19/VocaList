@@ -63,7 +63,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // redis에 insert (key = username / value = refreshToken)
         redisService.setValues(username, refreshToken, Duration.ofMillis(86400000L));
 
-        // 응답
+        // 응답 //
         response.setHeader("access", "Bearer " + accessToken);
         response.addCookie(createCookie("refresh", refreshToken));
         response.setStatus(HttpStatus.OK.value());
