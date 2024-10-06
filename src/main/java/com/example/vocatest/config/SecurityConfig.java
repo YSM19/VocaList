@@ -77,32 +77,33 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-//        http
-//                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-//
-//                    @Override
-//                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-//
-//                        CorsConfiguration configuration = new CorsConfiguration();
-//
-////                        AWS 버전
-//                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
-////                        configuration.setAllowedOrigins(Collections.singletonList("*"));
-//                        configuration.setAllowedMethods(Collections.singletonList("*"));
-//                        configuration.setAllowCredentials(true);
-//                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-//                        configuration.setMaxAge(3600L);
-//                        // 우리쪽 서버에서 보낼때
-//                        // change
-//                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+        http
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+//                        AWS 버전
+                        configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
+//                        configuration.setAllowedOrigins(Collections.singletonList("*"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+                        // 우리쪽 서버에서 보낼때
+                        // change
+                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-//                        // original
-////                        configuration.setExposedHeaders(Collections.singletonList("*"));
-////                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-//
-//                        return configuration;
-//                    }
-//                }));
+                        configuration.setExposedHeaders(Collections.singletonList("access"));
+                        // original
+//                        configuration.setExposedHeaders(Collections.singletonList("*"));
+//                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return configuration;
+                    }
+                }));
 
         return http.build();
     }
