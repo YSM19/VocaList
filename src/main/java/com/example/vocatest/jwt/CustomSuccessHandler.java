@@ -63,9 +63,18 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // redis에 insert (key = username / value = refreshToken)
         redisService.setValues(username, refreshToken, Duration.ofMillis(86400000L));
 
+        // 응답 바디에 accessToken과 refreshToken을 JSON으로 담아서 전송
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String jsonResponse = String.format(
+                "{\"accessToken\": \"%s\", \"refreshToken\": \"%s\"}", accessToken, refreshToken
+        );
+
         // 응답 //
 //        response.setHeader("access", "Bearer " + accessToken);
-        response.addCookie(createCookie("access", accessToken));
+//        response.addCookie(createCookie("access", accessToken));
+        response.getWriter().write(jsonResponse);
         response.addCookie(createCookie("refresh", refreshToken));
 //        response.setStatus(HttpStatus.OK.value());
         //*aws*
