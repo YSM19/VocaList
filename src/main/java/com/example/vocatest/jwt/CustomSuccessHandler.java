@@ -64,7 +64,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         redisService.setValues(username, refreshToken, Duration.ofMillis(86400000L));
 
         // 응답 //
-        response.setHeader("access", "Bearer " + accessToken);
+//        response.setHeader("access", "Bearer " + accessToken);
+        response.addCookie(createCookie("access", accessToken));
         response.addCookie(createCookie("refresh", refreshToken));
 //        response.setStatus(HttpStatus.OK.value());
         //*aws*
