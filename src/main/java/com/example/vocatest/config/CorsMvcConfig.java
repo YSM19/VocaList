@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsMvcConfig implements WebMvcConfigurer {
-//
+
     @Value("${config.front_url}")
     private String frontUrl;
 
@@ -15,7 +15,7 @@ public class CorsMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry corsRegistry) {
 
         corsRegistry.addMapping("/**")
-                .allowedOrigins(frontUrl)
+                .allowedOrigins(frontUrl, "http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:8080")
 //                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
