@@ -72,7 +72,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //                accessToken
 //        );
 
-        String redirectUrl = String.format("http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000", accessToken);
+        String redirectUrl = String.format("http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000/auth-callback?accessToken=%s", accessToken);
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
 
         // 응답 //
