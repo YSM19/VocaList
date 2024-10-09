@@ -15,11 +15,10 @@ public class CorsMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry corsRegistry) {
 
         corsRegistry.addMapping("/**")
-                .allowedOrigins(frontUrl, "http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:8080")
+                .allowedOrigins(frontUrl)
 //                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .exposedHeaders("Set-Cookie", "Authorization", "RefreshToken", "accessToken", "access", "refresh")
 //                .maxAge(3600)
                 .allowCredentials(true);
     }

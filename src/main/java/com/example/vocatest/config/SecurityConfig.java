@@ -91,12 +91,13 @@ public class SecurityConfig {
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setExposedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
                         // 우리쪽 서버에서 보낼때
                         // change
-                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+//                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-                        configuration.setExposedHeaders(Collections.singletonList("access"));
+//                        configuration.setExposedHeaders(Collections.singletonList("access"));
                         // original
 //                        configuration.setExposedHeaders(Collections.singletonList("*"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
