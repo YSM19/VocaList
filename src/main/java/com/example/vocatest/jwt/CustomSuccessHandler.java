@@ -68,8 +68,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.setCharacterEncoding("UTF-8");
 
         String jsonResponse = String.format(
-                "{\"accessToken\": \"%s\", \"refreshToken\": \"%s\", \"redirectUrl\": \"http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000\"}",
-                accessToken, refreshToken
+                "{\"accessToken\": \"%s\", \"redirectUrl\": \"http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000\"}",
+                accessToken
         );
 
         // 응답 //
