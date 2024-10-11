@@ -68,6 +68,6 @@ jobs:
             ## 사용하지 않는 이미지 삭제
             #sudo docker image prune -a -f
             sudo docker pull "${{ secrets.DOCKER_USERNAME }}"/vocalist
-            #sudo docker run -d --rm --name backend -p 8080:8080 "${{ secrets.DOCKER_USERNAME }}"/vocalist
-            sudo docker run -d --rm --name backend -p 443:443 "${{ secrets.DOCKER_USERNAME }}"/vocalist
+            sudo docker run -d --rm --name backend -p 8080:8080 "${{ secrets.DOCKER_USERNAME }}"/vocalist
+            #sudo docker run -d --rm --name backend -p 443:443 "${{ secrets.DOCKER_USERNAME }}"/vocalist
 
