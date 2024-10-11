@@ -84,7 +84,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie("refresh", refreshToken));
 //        response.setStatus(HttpStatus.OK.value());
         //*aws*
-//        response.sendRedirect(frontUrl);      // 로그인 성공시 프론트에 알려줄 redirect 경로
+        response.sendRedirect(frontUrl);      // 로그인 성공시 프론트에 알려줄 redirect 경로
         // */
 
     }
