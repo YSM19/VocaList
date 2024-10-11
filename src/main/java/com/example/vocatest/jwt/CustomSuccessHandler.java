@@ -72,7 +72,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //                accessToken
 //        );
 
-        String redirectUrl = String.format("http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000/auth-callback?accessToken=%s&refresh_token=%s", accessToken, refreshToken);
+//        String redirectUrl = String.format("http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000/auth-callback?accessToken=%s&refresh_token=%s", accessToken, refreshToken);
+        String redirectUrl = String.format("https://vocalist.kro.kr/auth-callback?accessToken=%s&refresh_token=%s", accessToken, refreshToken);
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
 
         // 응답 //
