@@ -25,7 +25,7 @@ import java.util.Collections;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+//
     @Value("${config.front_url}")
     private String frontUrl;
 
