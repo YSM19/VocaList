@@ -76,7 +76,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        String redirectUrl = String.format("http://ec2-15-164-103-179.ap-northeast-2.compute.amazonaws.com:3000/auth-callback?accessToken=%s&refresh_token=%s", accessToken, refreshToken);
 //        String redirectUrl = String.format("https://vocalist.kro.kr/auth-callback?accessToken=%s&refresh_token=%s", accessToken, refreshToken);
 //        String redirectUrl = String.format("https://vocalist.kro.kr/auth-callback?accessToken=%s", accessToken);
-        response.addCookie(createCookie("refresh", refreshToken));
+//        response.addCookie(createCookie("refresh", refreshToken));
 //        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
 
         // 응답 //
@@ -84,7 +84,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        response.addCookie(createCookie("access", accessToken));
         response.addCookie(createCookie("Authorization", accessToken));
 //        response.getWriter().write(jsonResponse);
-//        response.addCookie(createCookie("refresh", refreshToken));
+        response.addCookie(createCookie("refresh", refreshToken));
+        log.info("Authorization: " + accessToken + ", refresh: " + refreshToken);
 //        response.setStatus(HttpStatus.OK.value());
         //*aws*
         response.sendRedirect(frontUrl);      // 로그인 성공시 프론트에 알려줄 redirect 경로
