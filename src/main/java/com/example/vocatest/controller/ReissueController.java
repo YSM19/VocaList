@@ -69,7 +69,8 @@ public class ReissueController {
         }
 
         // 새로운 JWT Token 생성
-        String newAccessToken = jwtUtil.createJwt("access", username, name, email, role, 1000*60*30L);
+//        String newAccessToken = jwtUtil.createJwt("access", username, name, email, role, 1000*60*30L);
+        String newAccessToken = jwtUtil.createJwt("Authorization", username, name, email, role, 1000*60*30L);
         String newRefreshToken  = jwtUtil.createJwt("refresh", username, name, email, role, 86400000L);
 
         // update refreshToken to Redis
@@ -77,7 +78,8 @@ public class ReissueController {
 
         // 응답
 //        response.setHeader("access", "Bearer " + newAccessToken);
-        response.addCookie(createCookie("access", newAccessToken));
+//        response.addCookie(createCookie("access", newAccessToken));
+        response.addCookie(createCookie("Authorization", newAccessToken));
         response.addCookie(createCookie("refresh", newRefreshToken));
 
         return new ResponseEntity<>(HttpStatus.OK);

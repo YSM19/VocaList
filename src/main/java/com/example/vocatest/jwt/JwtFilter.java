@@ -80,7 +80,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         //*change
         // 요청 헤더에 있는 access라는 값을 가져오기 이게 accessToken
-        String accessToken = request.getHeader("access");
+//        String accessToken = request.getHeader("access");
+        String accessToken = request.getHeader("Authorization");
 
         // 요청헤더에 access가 없는 경우
         if(accessToken  == null) {
@@ -112,7 +113,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String category = jwtUtil.getCategory(originToken);
 
         // JWTFilter는 요청에 대해 accessToken만 취급하므로 access인지 확인
-        if(!"access".equals(category)) {
+//        if(!"access".equals(category)) {
+        if(!"Authorization".equals(category)) {
             PrintWriter writer = response.getWriter();
             writer.println("invalid access token");
 
