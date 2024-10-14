@@ -72,21 +72,21 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //                accessToken
 //        );
 
-//        String redirectUrl = String.format("https://vocalist.kro.kr/auth-callback?accessToken=%s", accessToken);
-//        response.addCookie(createCookie("refresh", refreshToken));
-//        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+        String redirectUrl = String.format("https://vocalist.kro.kr/auth-callback?accessToken=%s", accessToken);
+        response.addCookie(createCookie("refresh", refreshToken));
+        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
 
         // 응답 //
         // 응답 헤더에 넣기
 //        response.setHeader("access", "Bearer " + accessToken);
-        response.addCookie(createCookie("Authorization", accessToken));
+//        response.addCookie(createCookie("Authorization", accessToken));
         // 응답 body로 반환
 //        response.getWriter().write(jsonResponse);
-        response.addCookie(createCookie("refresh", refreshToken));
+//        response.addCookie(createCookie("refresh", refreshToken));
         log.info("Authorization: " + accessToken + ", refresh: " + refreshToken);
 //        response.setStatus(HttpStatus.OK.value());
         //*aws*
-        response.sendRedirect(frontUrl);      // 로그인 성공시 프론트에 알려줄 redirect 경로
+//        response.sendRedirect(frontUrl);      // 로그인 성공시 프론트에 알려줄 redirect 경로
         // */
 
     }
