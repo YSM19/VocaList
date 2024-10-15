@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -15,7 +16,12 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public Map<String, Object> getAttributes() {
-        return null;
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("username", userDTO.getUserName());
+        attributes.put("name", userDTO.getName());
+        attributes.put("email", userDTO.getEmail());
+        attributes.put("role", userDTO.getRole());
+        return attributes;
     }
 
     @Override
