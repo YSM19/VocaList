@@ -86,7 +86,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String accessToken = request.getHeader("Authorization");
 
         // 요청헤더에 access가 없는 경우
-        if(accessToken  == null) {
+        if(accessToken == null) {
             log.info("Authorization header is empty");
             filterChain.doFilter(request, response);
             return;
