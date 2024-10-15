@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsMvcConfig implements WebMvcConfigurer {
-
+//
     @Value("${config.front_url}")
     private String frontUrl;
 
