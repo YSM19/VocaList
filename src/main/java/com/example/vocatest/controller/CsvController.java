@@ -62,7 +62,7 @@ public class CsvController implements CsvControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body("다운 완료");
     }
 
-    @PostMapping(value = "/readcsv")
+    @GetMapping(value = "/readcsv")
     public ResponseEntity<String> readCsv(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto) {
         String filePath = "D:/vocatest/단어.csv";
 
