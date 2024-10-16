@@ -1,5 +1,7 @@
 package com.example.vocatest.config;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+@OpenAPIDefinition(servers = {@Server(url = "https://vocalist.kro.kr", description = "vocalist api swagger")})
 @Configuration
 public class SwaggerConfig {
 
