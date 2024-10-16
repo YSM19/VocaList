@@ -14,26 +14,26 @@ public class CorsMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedMethods(
-                        HttpMethod.GET.name(),
-                        HttpMethod.HEAD.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.POST.name(),
-                        HttpMethod.PUT.name(),
-                        HttpMethod.PATCH.name(),
-                        HttpMethod.DELETE.name(),
-                        HttpMethod.OPTIONS.name(),
-                        HttpMethod.TRACE.name()
-                );
-    }
 //        corsRegistry.addMapping("/**")
-//                .allowedOrigins(frontUrl)
-////                .allowedOrigins("*")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .allowedHeaders("*")
-//                .maxAge(3600)
-//                .allowCredentials(true);
+//                .allowedOriginPatterns("*")
+//                .allowedMethods(
+//                        HttpMethod.GET.name(),
+//                        HttpMethod.HEAD.name(),
+//                        HttpMethod.POST.name(),
+//                        HttpMethod.POST.name(),
+//                        HttpMethod.PUT.name(),
+//                        HttpMethod.PATCH.name(),
+//                        HttpMethod.DELETE.name(),
+//                        HttpMethod.OPTIONS.name(),
+//                        HttpMethod.TRACE.name()
+//                );
 //    }
+        corsRegistry.addMapping("/**")
+                .allowedOrigins(frontUrl)
+//                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .maxAge(3600)
+                .allowCredentials(true);
+    }
 }
