@@ -75,4 +75,7 @@ public class QuizController implements QuizControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body(quizEntity);
 
     }
+
+//    @PostMapping("/addTotalScore") {
+//    }
 }

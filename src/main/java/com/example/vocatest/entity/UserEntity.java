@@ -25,4 +25,6 @@ public class UserEntity {
     @Schema(description = "역할", example = "USER")
     private String role;
 
+    @Schema(description = "유저 Total 스코어", example = "10")
+    private int totalScore;
 }

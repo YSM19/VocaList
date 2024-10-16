@@ -92,6 +92,7 @@ public class CsvController implements CsvControllerDocs {
                     VocaContentEntity vocaContentEntity = new VocaContentEntity();
                     vocaContentEntity.setText(stringList.get(0));
                     vocaContentEntity.setTranstext(stringList.get(1));
+                    vocaContentEntity.setSampleSentence(stringList.get(2));
                     vocaContentEntity.setVocaListEntity(createdVocaListEntity);
 
                     vocaService.saveVocaContent(vocaContentEntity);
