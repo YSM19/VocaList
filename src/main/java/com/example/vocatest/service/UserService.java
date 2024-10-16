@@ -47,6 +47,7 @@ public class UserService extends DefaultOAuth2UserService {
             userEntity.setEmail(oAuth2Response.getEmail());
             userEntity.setName(oAuth2Response.getName());
             userEntity.setRole("ROLE_USER");
+            userEntity.setTotalScore(0);
             userRepository.save(userEntity);
 
 //            UserDTO userDTO = new UserDTO();
@@ -77,8 +78,15 @@ public class UserService extends DefaultOAuth2UserService {
         userDTO.setName(userEntity.getName());
         userDTO.setEmail(userEntity.getEmail());
         userDTO.setRole("ROLE_USER");
+        userDTO.setTotalScroe(userEntity.getTotalScore());
 
         return userDTO;
+    }
+
+    public void addTotalScrore(String email, int score) {
+        UserEntity user = findUserByEmail(email);
+        user.setTotalScore(user.getTotalScore() + score);
+        userRepository.save(user);
     }
 
     public List<UserEntity> findAllUsers(){
@@ -96,5 +104,6 @@ public class UserService extends DefaultOAuth2UserService {
     public UserEntity findUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
 
 }

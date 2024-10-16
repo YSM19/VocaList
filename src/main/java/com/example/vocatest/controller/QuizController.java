@@ -4,6 +4,7 @@ import com.example.vocatest.controllerDocs.QuizControllerDocs;
 import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.QuizDTO;
 import com.example.vocatest.entity.QuizEntity;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.service.QuizService;
 import com.example.vocatest.service.VocaService;
@@ -76,6 +77,4 @@ public class QuizController implements QuizControllerDocs {
 
     }
 
-//    @PostMapping("/addTotalScore") {
-//    }
 }
