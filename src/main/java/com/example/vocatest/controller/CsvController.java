@@ -30,6 +30,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/api")
 public class CsvController implements CsvControllerDocs {
 
     private final CsvService csvService;
