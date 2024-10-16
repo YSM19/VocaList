@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@OpenAPIDefinition(servers = {@Server(url = "https://vocalist.kro.kr", description = "vocalist api swagger")})
 @SpringBootApplication
 public class VocatestApplication {
 
