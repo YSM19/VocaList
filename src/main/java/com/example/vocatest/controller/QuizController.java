@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("api/quiz")
+@RequestMapping("/api/quiz")
 @Tag(name = "퀴즈", description = "퀴즈 관련 API")
 public class QuizController implements QuizControllerDocs {
 
