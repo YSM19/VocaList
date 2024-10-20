@@ -12,7 +12,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-@OpenAPIDefinition(servers = {@Server(url = "https://vocalist.kro.kr", description = "vocalist api swagger")})
+@OpenAPIDefinition(
+        servers = {
+                @Server(url = "https://vocalist.kro.kr", description = "vocalist api swagger")
+        }
+)
 @Configuration
 public class SwaggerConfig {
 
