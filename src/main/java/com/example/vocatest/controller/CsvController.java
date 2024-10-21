@@ -59,6 +59,10 @@ public class CsvController implements CsvControllerDocs {
             writer.write("\uFEFF");
             csvWriter.writeAll(csvService.listVocaContentString(id));
         }
+        catch (IOException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body("다운 완료");
     }
