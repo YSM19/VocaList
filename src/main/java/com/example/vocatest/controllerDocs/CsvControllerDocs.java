@@ -1,5 +1,6 @@
 package com.example.vocatest.controllerDocs;
 
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.VocaListDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,5 +37,5 @@ public interface CsvControllerDocs {
             @ApiResponse(responseCode = "200", description = "등록 성공"),
             @ApiResponse(responseCode = "400", description = "등록 실패")
     })
-    public ResponseEntity<String> readCsv(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto);
+    public ResponseEntity<String> readCsv(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @RequestBody VocaListDto vocaListDto);
 }
