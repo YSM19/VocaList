@@ -70,7 +70,7 @@ public class CsvController implements CsvControllerDocs {
 
     @PostMapping(value = "/readcsv")
     public ResponseEntity<String> readCsv(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @RequestBody VocaListDto vocaListDto) {
-        String filePath = "D:/vocatest/단어.csv";
+        String filePath = "D:/vocatest/word.csv";
 
         try (BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
             String line;

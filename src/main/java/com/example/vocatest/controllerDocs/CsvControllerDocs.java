@@ -32,7 +32,7 @@ public interface CsvControllerDocs {
     @Parameters(value = {
             @Parameter(name = "title", description = "단어장 제목")
     })
-    @Operation(summary = "CSV불러오기", description = "CSV파일을 불러와 단어장에 등록합니다. <br><br> 경로: D:/vocatest/단어.csv <br><br> 필요 파라미터 : 단어장 제목")
+    @Operation(summary = "CSV불러오기", description = "CSV파일을 불러와 단어장에 등록합니다. <br><br> 경로: D:/vocatest/word.csv <br><br> 필요 파라미터 : 단어장 제목")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "등록 성공"),
             @ApiResponse(responseCode = "400", description = "등록 실패")
