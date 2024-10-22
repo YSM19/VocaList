@@ -75,4 +75,11 @@ public class UserController implements UserControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    @GetMapping
+    public ResponseEntity<String> getUsernamebyEmail(@RequestBody String email) {
+        UserEntity userEntity = userService.findUserByEmail(email);
+        String username = userEntity.getUsername();
+        return ResponseEntity.ok(username);
+    }
+
 }

@@ -57,23 +57,6 @@ public class UserVocalistController implements UserVocaListControllerDocs {
         }
     }
 
-    @GetMapping("/showallwithuser") // 유저정보를 포함하고있는 공개 단어장 보여주기
-    public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
-//        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
-        List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
-
-//        return ResponseEntity.ok(openedVocaListEntity);
-
-        try {
-            UserVocaListEntity userVocaListEntity = (UserVocaListEntity) openedVocaListEntity;
-            return ResponseEntity.status(HttpStatus.CREATED).body((List<VocaListEntity>) userVocaListEntity);
-        } catch (IllegalArgumentException e) {
-            log.info(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
-
-
     @DeleteMapping("/delete/{uservocalistId}")
     public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
                                                      @PathVariable("uservocalistId")Long uservocalistId){ //유저가 가지고 있는 단어장 삭제 메소드

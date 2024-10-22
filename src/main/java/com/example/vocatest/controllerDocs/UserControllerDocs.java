@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -64,4 +65,11 @@ public interface UserControllerDocs {
             @ApiResponse(responseCode = "400", description = "유저정보 받아오기 실패", content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<UserEntity> getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
+
+    @Operation(summary = "이메일로 유저이름 받아오기", description = "이메일로 유저이름을 받아옵니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "유저이름 받아오기 성공", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "유저이름 받아오기 실패", content = @Content(mediaType = "application/json"))
+    })
+    public ResponseEntity<String> getUsernamebyEmail(@RequestBody String email);
 }
