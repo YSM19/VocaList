@@ -21,12 +21,12 @@ import java.util.List;
 
 @Tag(name = "단어장", description = "단어장 관련 API")
 public interface VocaListControllerDocs {
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "모든 단어장 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = VocaListEntity.class)))),
-            @ApiResponse(responseCode = "400", description = "조회 실패", content = @Content(schema = @Schema(implementation = ApiCommonResponse.class))) })
-    @Operation(summary = "모든 단어장 조회", description = "모든 단어장의 리스트를 조회합니다.")
-    @GetMapping("/showall")
-    public ResponseEntity<List<VocaListEntity>> findAllVocaList();
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "모든 단어장 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = VocaListEntity.class)))),
+//            @ApiResponse(responseCode = "400", description = "조회 실패", content = @Content(schema = @Schema(implementation = ApiCommonResponse.class))) })
+//    @Operation(summary = "모든 단어장 조회", description = "모든 단어장의 리스트를 조회합니다.")
+//    @GetMapping("/showall")
+//    public ResponseEntity<List<VocaListEntity>> findAllVocaList();
 
     @Parameters(value = {
             @Parameter(name = "vocalistId", description = "단어장 id 값"),
