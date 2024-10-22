@@ -1,5 +1,6 @@
 package com.example.vocatest.controllerDocs;
 
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.VocaListDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,10 +32,10 @@ public interface CsvControllerDocs {
     @Parameters(value = {
             @Parameter(name = "title", description = "단어장 제목")
     })
-    @Operation(summary = "CSV불러오기", description = "CSV파일을 불러와 단어장에 등록합니다. <br><br> 경로: D:/vocatest/단어.csv <br><br> 필요 파라미터 : 단어장 제목")
+    @Operation(summary = "CSV불러오기", description = "CSV파일을 불러와 단어장에 등록합니다. <br><br> 경로: D:/vocatest/word.csv <br><br> 필요 파라미터 : 단어장 제목")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "등록 성공"),
             @ApiResponse(responseCode = "400", description = "등록 실패")
     })
-    public ResponseEntity<String> readCsv(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto);
+    public ResponseEntity<String> readCsv(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @RequestBody VocaListDto vocaListDto);
 }

@@ -4,11 +4,10 @@ import com.example.vocatest.controllerDocs.QuizControllerDocs;
 import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.QuizDTO;
 import com.example.vocatest.entity.QuizEntity;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.VocaContentEntity;
-import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.service.QuizService;
 import com.example.vocatest.service.VocaService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("api/quiz")
+@RequestMapping("/api/quiz")
 @Tag(name = "퀴즈", description = "퀴즈 관련 API")
 public class QuizController implements QuizControllerDocs {
 
@@ -77,4 +76,5 @@ public class QuizController implements QuizControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body(quizEntity);
 
     }
+
 }

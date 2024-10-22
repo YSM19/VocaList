@@ -44,30 +44,15 @@ public class JwtUtil {
     }
 
     // accessToken인지 refreshToken인지 확인
-//    public String getCategory(String token) {
-//        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
-//    }
-
-    // JWT 발급
-//     *orignial*
-    public String createJwt(/*String category,*/ String username, String name, String email, String role, Long expiredMs) {
-        return Jwts.builder()
-//                .claim("category", category)
-                .claim("username", username)
-                .claim("name", name)
-                .claim("email", email)
-                .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .signWith(secretKey)
-                .compact();
+    public String getCategory(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
     }
 
-//        //*change
-//    // JWT 발급
-//    public String createJwt(String category, String username, String name, String email, String role, Long expiredMs) {
+    // JWT 발급
+////     *orignial*
+//    public String createJwt(/*String category,*/ String username, String name, String email, String role, Long expiredMs) {
 //        return Jwts.builder()
-//                .claim("category", category)
+////                .claim("category", category)
 //                .claim("username", username)
 //                .claim("name", name)
 //                .claim("email", email)
@@ -77,6 +62,21 @@ public class JwtUtil {
 //                .signWith(secretKey)
 //                .compact();
 //    }
-//      // */
+
+        //*change
+    // JWT 발급
+    public String createJwt(String category, String username, String name, String email, String role, Long expiredMs) {
+        return Jwts.builder()
+                .claim("category", category)
+                .claim("username", username)
+                .claim("name", name)
+                .claim("email", email)
+                .claim("role", role)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                .signWith(secretKey)
+                .compact();
+    }
+      // */
 
 }

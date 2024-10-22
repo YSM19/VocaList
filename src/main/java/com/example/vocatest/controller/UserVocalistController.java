@@ -1,9 +1,8 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.UserVocaListControllerDocs;
-import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserVocaListEntity;
-import com.example.vocatest.service.UserService;
+import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.service.VocaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,6 @@ public class UserVocalistController implements UserVocaListControllerDocs {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-
 
     @DeleteMapping("/delete/{uservocalistId}")
     public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,

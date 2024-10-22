@@ -1,7 +1,9 @@
 package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.CsvControllerDocs;
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.VocaListDto;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.entity.VocaListEntity;
@@ -30,6 +32,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/api")
 public class CsvController implements CsvControllerDocs {
 
     private final CsvService csvService;
@@ -58,13 +61,17 @@ public class CsvController implements CsvControllerDocs {
             writer.write("\uFEFF");
             csvWriter.writeAll(csvService.listVocaContentString(id));
         }
+        catch (IOException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body("다운 완료");
     }
 
     @PostMapping(value = "/readcsv")
-    public ResponseEntity<String> readCsv(@AuthenticationPrincipal OAuth2User oAuth2User, @RequestBody VocaListDto vocaListDto) {
-        String filePath = "D:/vocatest/단어.csv";
+    public ResponseEntity<String> readCsv(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @RequestBody VocaListDto vocaListDto) {
+        String filePath = "D:/vocatest/word.csv";
 
         try (BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
             String line;
@@ -72,8 +79,9 @@ public class CsvController implements CsvControllerDocs {
             boolean isFirstLine = true;
 
 
-            String email = oAuth2User.getAttribute("email");
-            VocaListEntity createdVocaListEntity = vocaListDto.toEntity(email);
+            String email = customOAuth2User.getAttribute("email");
+            UserEntity user = userService.findUserByEmail(email);
+            VocaListEntity createdVocaListEntity = vocaListDto.toEntity(email, user.getName());
             vocaService.saveVocaList(createdVocaListEntity);
 
             UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
@@ -92,6 +100,7 @@ public class CsvController implements CsvControllerDocs {
                     VocaContentEntity vocaContentEntity = new VocaContentEntity();
                     vocaContentEntity.setText(stringList.get(0));
                     vocaContentEntity.setTranstext(stringList.get(1));
+                    vocaContentEntity.setSampleSentence(stringList.get(2));
                     vocaContentEntity.setVocaListEntity(createdVocaListEntity);
 
                     vocaService.saveVocaContent(vocaContentEntity);
@@ -105,4 +114,5 @@ public class CsvController implements CsvControllerDocs {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일 읽기 오류");
         }
     }
+
 }

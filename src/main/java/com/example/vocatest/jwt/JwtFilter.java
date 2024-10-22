@@ -9,6 +9,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -26,75 +28,42 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-
-        // 인증을 건너뛸 경로 설정
-        if (path.equals("/login") || path.equals("/loginForm")
-                || path.equals("/api/vocalist/showall") || path.equals("/api/vocalist/show/{vocalistId}")
-                || path.equals("/api/vocacontent/showall/{vocalistId}")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-//        *original
-        String authorization = null;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-
-            System.out.println(cookie.getName());
-            if (cookie.getName().equals("Authorization")) {
-
-                authorization = cookie.getValue();
-            }
-        }
-
-        if (authorization == null) {
-
-            System.out.println("token null");
-            filterChain.doFilter(request, response);
-
-            return;
-        }
-
-        String originToken = authorization;
-
-        // 유효한지 확인 후 클라이언트로 상태 코드 응답
-        try {
-            if(jwtUtil.isExpired(originToken)) {
-                filterChain.doFilter(request, response);
-
-                PrintWriter writer = response.getWriter();
-                writer.println("access token expired");
-
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
-            }
-        } catch (ExpiredJwtException e) {
-            PrintWriter writer = response.getWriter();
-            writer.println("access token expired");
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-//         */
-
-//        //*change
-//        // 요청 헤더에 있는 access라는 값을 가져오기 이게 accessToken
-//        String accessToken = request.getHeader("access");
+//        String path = request.getRequestURI();
 //
-//        // 요청헤더에 access가 없는 경우
-//        if(accessToken  == null) {
+//        // 인증을 건너뛸 경로 설정
+//        if (path.equals("/login") || path.equals("/loginForm")
+//                || path.equals("/api/vocalist/showall") || path.equals("/api/vocalist/show/{vocalistId}")
+//                || path.equals("/api/vocacontent/showall/{vocalistId}")) {
 //            filterChain.doFilter(request, response);
 //            return;
 //        }
+
+//        *original
+//        String authorization = null;
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies) {
 //
-//        // Bearer 제거 <- oAuth2를 이용했다고 명시적으로 붙여주는 타입인데 JWT를 검증하거나 정보를 추출 시 제거해줘야한다.
-//        String originToken = accessToken.substring(7);
+//            System.out.println(cookie.getName());
+//            if (cookie.getName().equals("Authorization")) {
+//
+//                authorization = cookie.getValue();
+//            }
+//        }
+//
+//        if (authorization == null) {
+//
+//            System.out.println("token null");
+//            filterChain.doFilter(request, response);
+//
+//            return;
+//        }
+//
+//        String originToken = authorization;
 //
 //        // 유효한지 확인 후 클라이언트로 상태 코드 응답
 //        try {
 //            if(jwtUtil.isExpired(originToken)) {
-//                filterChain.doFilter(request, response);
+////                filterChain.doFilter(request, response);
 //
 //                PrintWriter writer = response.getWriter();
 //                writer.println("access token expired");
@@ -109,20 +78,53 @@ public class JwtFilter extends OncePerRequestFilter {
 //            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 //            return;
 //        }
-//
-//        // accessToken인지 refreshToken인지 확인
-//        String category = jwtUtil.getCategory(originToken);
-//        System.out.println(category);
-//
-//        // JWTFilter는 요청에 대해 accessToken만 취급하므로 access인지 확인
+////         */
+
+        //*change
+        // 요청 헤더에 있는 access라는 값을 가져오기 이게 accessToken
+//        String accessToken = request.getHeader("access");
+        String accessToken = request.getHeader("Authorization");
+
+        // 요청헤더에 access가 없는 경우
+        if(accessToken == null) {
+            log.info("Authorization header is empty");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // Bearer 제거 <- oAuth2를 이용했다고 명시적으로 붙여주는 타입인데 JWT를 검증하거나 정보를 추출 시 제거해줘야한다.
+        String originToken = accessToken.substring(7);
+
+        // 유효한지 확인 후 클라이언트로 상태 코드 응답
+        try {
+            if(jwtUtil.isExpired(originToken)) {
+                PrintWriter writer = response.getWriter();
+                writer.println("access token expired");
+
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+        } catch (ExpiredJwtException e) {
+            PrintWriter writer = response.getWriter();
+            writer.println("access token expired");
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        // accessToken인지 refreshToken인지 확인
+        String category = jwtUtil.getCategory(originToken);
+
+        // JWTFilter는 요청에 대해 accessToken만 취급하므로 access인지 확인
 //        if(!"access".equals(category)) {
-//            PrintWriter writer = response.getWriter();
-//            writer.println("invalid access token");
-//
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            return;
-//        }
-//       // */
+        if(!"Authorization".equals(category)) {
+            PrintWriter writer = response.getWriter();
+            writer.println("invalid access token");
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+       // */
 
         // 사용자명과 권한을 accessToken에서 추출
         String username = jwtUtil.getUsername(originToken);

@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -34,12 +35,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+//
         http
                 .csrf((csrf) -> csrf.disable())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll())
+                .formLogin((auth) -> auth.disable())
                 .httpBasic((basic) -> basic.disable());
 
 
@@ -53,7 +52,6 @@ public class SecurityConfig {
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(userService))
                         .successHandler(customSuccessHandler)
-
                 );
 
 //        // *original
@@ -66,7 +64,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/", "/reissue").permitAll()
-                        .requestMatchers("/", "/login", "/api/vocalist/showall", "api/vocalist/show/{vocalistId}",
+                        .requestMatchers("/", "/login", "/reissue",
+                                "/swagger-ui/**", "/swagger-resource/**", "/api-docs/**", "/swagger-ui.html",
+                                "/api/readcsv",
+                                "/api/vocalist/showall", "/api/vocalist/show/{vocalistId}",
                                 "/api/vocacontent/showall/{vocalistId}").permitAll()
                         .anyRequest().authenticated());
         // */
@@ -85,18 +86,19 @@ public class SecurityConfig {
 
 //                        AWS 버전
                         configuration.setAllowedOrigins(Collections.singletonList(frontUrl));
-//                        Local 버전
 //                        configuration.setAllowedOrigins(Collections.singletonList("*"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setExposedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
                         // 우리쪽 서버에서 보낼때
                         // change
 //                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+//                        configuration.setExposedHeaders(Collections.singletonList("access"));
                         // original
-                        configuration.setExposedHeaders(Collections.singletonList("*"));
+//                        configuration.setExposedHeaders(Collections.singletonList("*"));
 //                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;

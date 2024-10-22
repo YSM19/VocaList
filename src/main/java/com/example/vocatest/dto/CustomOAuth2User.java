@@ -9,14 +9,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
 
     private final UserDTO userDTO;
-
-    public CustomOAuth2User(UserDTO userDto) {
-        this.userDTO = userDto;
-        System.out.println("CustomOAuth2User 생성: username: " + userDto.getName());
-    }
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -30,7 +26,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         Collection<GrantedAuthority> collection = new ArrayList<>();
 
         collection.add(new GrantedAuthority() {
@@ -48,10 +43,9 @@ public class CustomOAuth2User implements OAuth2User {
         return userDTO.getName();
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return userDTO.getUserName();
     }
-
     public String getEmail() {
         return userDTO.getEmail();
     }

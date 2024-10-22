@@ -20,6 +20,7 @@ public class VocaContentEntity { //단어 내용
     @Schema(description = "단어 해석", example = "사과")
     private String transtext; //해석
 
+    @Schema(description = "예시 문장", example = "I eat apple")
     private String sampleSentence; // 예문
 
     @Schema(description = "단어장 참조값")

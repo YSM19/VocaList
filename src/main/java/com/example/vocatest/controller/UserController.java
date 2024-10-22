@@ -2,12 +2,10 @@ package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.UserControllerDocs;
 import com.example.vocatest.dto.CustomOAuth2User;
+import com.example.vocatest.entity.QuizEntity;
 import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.service.UserService;
 import com.example.vocatest.service.VocaService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,6 +65,14 @@ public class UserController implements UserControllerDocs {
     public ResponseEntity<UserEntity> getMyUserData(@AuthenticationPrincipal CustomOAuth2User customOAuth2User){
         String email = customOAuth2User.getAttribute("email");
         return ResponseEntity.ok(userService.findUserByEmail(email));
+    }
+
+    @PostMapping("/addtotalscore")
+    public ResponseEntity<UserEntity> addTotalScore(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                                    @RequestBody QuizEntity quizEntity) {
+        String email = customOAuth2User.getAttribute("email");
+        userService.addTotalScrore(email, quizEntity.getScore());
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
 }

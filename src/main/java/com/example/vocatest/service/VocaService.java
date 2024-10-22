@@ -31,8 +31,10 @@ public class VocaService {
     //    --------------------------단어장-------------------------
     // create
     public VocaListEntity createVocaList(String email, VocaListDto vocaListDto){
+        UserEntity user = userService.findUserByEmail(email);
+
         // VocaList 생성
-        VocaListEntity vocaListEntity = vocaListDto.toEntity(email);
+        VocaListEntity vocaListEntity = vocaListDto.toEntity(email, user.getName());
         saveVocaList(vocaListEntity);
 
         // UserVocaList 생성
@@ -134,10 +136,10 @@ public class VocaService {
 
     // create
     public UserVocaListEntity createUserVocaList(String userEmail, Long vocalistId) {
-
+        UserEntity user = userService.findUserByEmail(userEmail);
         // 단어장 생성
         VocaListEntity originalVocaListEntity = findVocaListById(vocalistId);
-        VocaListEntity newVocaListEntity = VocaListDto.createVocaListToEntity(originalVocaListEntity, userEmail);
+        VocaListEntity newVocaListEntity = VocaListDto.createVocaListToEntity(originalVocaListEntity, userEmail, user.getName());
         vocaListRepository.save(newVocaListEntity);
 
         // 단어장에 들어가야할 단어 리스트

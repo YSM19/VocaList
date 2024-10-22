@@ -12,12 +12,12 @@ public class VocaListDto {
     @Schema(description = "단어장 제목", example = "English")
     private String title;
 
-    public static VocaListEntity createVocaListToEntity(VocaListEntity originalVocaListEntity, String email){
-        return new VocaListEntity(email, originalVocaListEntity.getTitle(), 0, 0L);
+    public static VocaListEntity createVocaListToEntity(VocaListEntity originalVocaListEntity, String email, String username){
+        return new VocaListEntity(email, username, originalVocaListEntity.getTitle(), 0, 0L);
     }
 
-    public VocaListEntity toEntity(String email){
-        return new VocaListEntity(email, title, 0, 0L);
+    public VocaListEntity toEntity(String email, String username){
+        return new VocaListEntity(email, username, title, 0, 0L);
     }
 
 }
