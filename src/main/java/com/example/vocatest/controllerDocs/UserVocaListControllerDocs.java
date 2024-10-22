@@ -45,7 +45,7 @@ public interface UserVocaListControllerDocs {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모든 단어장 조회 성공", content = @Content(array = @ArraySchema(schema = @Schema(implementation = VocaListEntity.class)))),
             @ApiResponse(responseCode = "400", description = "조회 실패", content = @Content(schema = @Schema(implementation = ApiCommonResponse.class))) })
-    @Operation(summary = "모든 단어장 조회", description = "모든 단어장의 리스트를 조회합니다.")
+    @Operation(summary = "유저정보를 포함하고있는 공개 단어장 조회", description = "유저정보를 포함하고있는 공개 단어장 조회합니다.")
     @GetMapping("/showall")
     public ResponseEntity<List<VocaListEntity>> findAllVocaList();
 

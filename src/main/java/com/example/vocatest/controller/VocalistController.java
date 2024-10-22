@@ -22,12 +22,12 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     private final VocaService vocaService;
 
-//    @GetMapping("/showall")
-//    public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
-////        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
-//        List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
-//        return ResponseEntity.ok(openedVocaListEntity);
-//    }
+    @GetMapping("/showall")
+    public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
+//        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
+        List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
+        return ResponseEntity.ok(openedVocaListEntity);
+    }
 
     @GetMapping("/show/{vocalistId}") // 선택한 단어장 조회
     public ResponseEntity<VocaListEntity> findVocaListById(@PathVariable("vocalistId")Long vocalistId){
