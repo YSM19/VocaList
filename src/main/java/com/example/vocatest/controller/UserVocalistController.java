@@ -61,7 +61,16 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
 //        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
         List<VocaListEntity> openedVocaListEntity = vocaService.findSecretVocaList(1);
-        return ResponseEntity.ok(openedVocaListEntity);
+
+//        return ResponseEntity.ok(openedVocaListEntity);
+
+        try {
+            UserVocaListEntity userVocaListEntity = (UserVocaListEntity) openedVocaListEntity;
+            return ResponseEntity.status(HttpStatus.CREATED).body((List<VocaListEntity>) userVocaListEntity);
+        } catch (IllegalArgumentException e) {
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
 
