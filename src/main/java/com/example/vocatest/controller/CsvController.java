@@ -3,6 +3,7 @@ package com.example.vocatest.controller;
 import com.example.vocatest.controllerDocs.CsvControllerDocs;
 import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.dto.VocaListDto;
+import com.example.vocatest.entity.UserEntity;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaContentEntity;
 import com.example.vocatest.entity.VocaListEntity;
@@ -79,7 +80,8 @@ public class CsvController implements CsvControllerDocs {
 
 
             String email = customOAuth2User.getAttribute("email");
-            VocaListEntity createdVocaListEntity = vocaListDto.toEntity(email);
+            UserEntity user = userService.findUserByEmail(email);
+            VocaListEntity createdVocaListEntity = vocaListDto.toEntity(email, user.getName());
             vocaService.saveVocaList(createdVocaListEntity);
 
             UserVocaListEntity userVocaListEntity = new UserVocaListEntity();
