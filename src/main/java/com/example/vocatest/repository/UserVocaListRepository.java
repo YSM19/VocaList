@@ -11,11 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-@Transactional
 public interface UserVocaListRepository extends JpaRepository<UserVocaListEntity, Long> {
     @Query("SELECT uv FROM UserVocaListEntity uv " +
-            "JOIN FETCH uv.vocaListEntity v " +
+            //"JOIN FETCH uv.vocaListEntity v " +
             "JOIN FETCH uv.userEntity u " +
             //"JOIN FETCH VocaContentEntity vc ON vc.vocaListEntity.id = v.id " +  // VocaContentEntity를 패치 조인
             "WHERE u.email = :email")
