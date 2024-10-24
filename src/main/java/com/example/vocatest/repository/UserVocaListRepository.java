@@ -14,8 +14,8 @@ public interface UserVocaListRepository extends JpaRepository<UserVocaListEntity
     @Query("SELECT DISTINCT uv FROM UserVocaListEntity uv " +
             "JOIN FETCH uv.vocaListEntity v " +
             "JOIN FETCH uv.userEntity u " +
-            //"JOIN FETCH VocaContentEntity vc ON vc.vocaListEntity.id = v.id " +  // VocaContentEntity를 패치 조인
-            "WHERE uv.userEntity.email = :email")
+            "JOIN FETCH v.vocaContentEntity vc " +  // vocaContents는 VocaListEntity에 정의된 관계
+            "WHERE u.email = :email")
     List<UserVocaListEntity> findByUserEntityEmail(String email); //파라미터로 받는 값이 내가 조회할 속성값
 
     UserVocaListEntity findByVocaListEntityId(Long vocaId);
