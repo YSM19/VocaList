@@ -29,7 +29,7 @@ public class UserVocalistController implements UserVocaListControllerDocs {
 
         if (customOAuth2User == null) {
             log.info("No user logged in");
-            return ResponseEntity.status(HttpStatus.UNAUTHO.RIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         String email = customOAuth2User.getAttribute("email");
