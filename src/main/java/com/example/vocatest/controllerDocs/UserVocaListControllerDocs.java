@@ -1,5 +1,6 @@
 package com.example.vocatest.controllerDocs;
 
+import com.example.vocatest.dto.CustomOAuth2User;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.swagger.ApiCommonResponse;
@@ -29,7 +30,7 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "사용자의 단어장 조회 실패")
     })
     @GetMapping()
-    public ResponseEntity<List<UserVocaListEntity>> findUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User);
+    public ResponseEntity<List<UserVocaListEntity>> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 
     @Parameters(value = {
             @Parameter(name = "uservocalistId", description = "사용자의 단어장 id 값"),
@@ -40,7 +41,7 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "사용자의 단어장 받아오기 실패")
     })
     @GetMapping("/{uservocalistId}")
-    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal OAuth2User OAuth2User, @PathVariable("uservocalistId")Long uservocalistId);
+    public ResponseEntity<UserVocaListEntity> bringUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User, @PathVariable("uservocalistId")Long uservocalistId);
 
 
     @Parameters(value = {
@@ -52,6 +53,6 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "사용자의 단어장 삭제 실패")
     })
     @DeleteMapping("/delete/{uservocalistId}")
-    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal OAuth2User oAuth2User,
+    public ResponseEntity<String> deleteUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                      @PathVariable("uservocalistId")Long uservocalistId);
 }
