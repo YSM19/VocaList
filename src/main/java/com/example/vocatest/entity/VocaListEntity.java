@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -31,9 +28,6 @@ public class VocaListEntity { //단어장 목록
 
     @Schema(description = "단어장을 받아간 횟수", example = "0")
     private Long count; // 받아간 횟수
-
-    @OneToMany(mappedBy = "vocalist", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<VocaContentEntity> vocaContentEntity = new ArrayList<>();
 
     // 아래부턴 생성자
     public VocaListEntity() {

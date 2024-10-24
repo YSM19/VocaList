@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VocaContentRepository extends JpaRepository<VocaContentEntity, Long> {
-    //@Query("SELECT vc from VocaContentEntity vc JOIN fetch vc.vocaListEntity WHERE vc.vocaListEntity.id = :vocaListId")
+    @Query("SELECT vc from VocaContentEntity vc JOIN fetch vc.vocaListEntity WHERE vc.vocaListEntity.id = :vocaListId")
     List<VocaContentEntity> findByVocaListEntityId(Long vocaListId);
 }
