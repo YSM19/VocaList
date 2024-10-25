@@ -189,7 +189,7 @@ public class VocaService {
     }
 
     public UserVocaListEntity findUserVocaListById(Long uservocalistId){
-        return userVocaListRepository.findUserVocaListEntityByUservocalistId(uservocalistId);
+        return userVocaListRepository.findUserVocaListEntityById(uservocalistId);
     }
 
 //    public UserVocaListEntity getUserVocaListId(Long title){
