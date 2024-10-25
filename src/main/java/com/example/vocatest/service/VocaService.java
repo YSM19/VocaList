@@ -91,6 +91,7 @@ public class VocaService {
         VocaListEntity vocaListEntity = findVocaListById(vocalistId);
         if (vocaListEntity != null) {
             vocaListEntity.setCount(vocaListEntity.getCount() + 1);
+            vocaListRepository.save(vocaListEntity);
         }
     }
 
