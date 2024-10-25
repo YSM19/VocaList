@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserVocaListEntity { //유저가 가지고 있는 단어장
-
+//
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
