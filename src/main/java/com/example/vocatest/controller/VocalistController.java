@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     private final VocaService vocaService;
 
+    @Transactional
     @GetMapping("/showall")
     public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
 //        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
