@@ -3,11 +3,12 @@ package com.example.vocatest.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 public class VocaListEntity { //단어장 목록
 
     @Id
@@ -29,11 +30,8 @@ public class VocaListEntity { //단어장 목록
     @Schema(description = "단어장을 받아간 횟수", example = "0")
     private Long count; // 받아간 횟수
 
-    // 아래부턴 생성자
-    public VocaListEntity() {
-
-    }
-
+    @Version
+    private Long version;
 
     
     public VocaListEntity(String email, String username, String title, int secret, Long count) {
@@ -43,9 +41,5 @@ public class VocaListEntity { //단어장 목록
         this.secret = secret;
         this.count = count;
     }
-
-//    public void addCount(Long count){
-//        this.count += count;
-//    }
 
 }

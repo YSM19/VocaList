@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 public class UserVocaListEntity { //유저가 가지고 있는 단어장
 
     @Id
@@ -27,8 +28,8 @@ public class UserVocaListEntity { //유저가 가지고 있는 단어장
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    public UserVocaListEntity(){
+    @Version
+    private Long version;
 
-    }
 
 }

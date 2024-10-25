@@ -31,6 +31,9 @@ public class QuizEntity {
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
+    @Version
+    private Long version;
+
     public QuizEntity(String email, int score, Date date, VocaListEntity vocaListEntity) {
         this.email = email;
         this.score = score;

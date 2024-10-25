@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 public class VocaContentEntity { //단어 내용
 
     @Id
@@ -33,6 +34,8 @@ public class VocaContentEntity { //단어 내용
     @OnDelete(action = OnDeleteAction.CASCADE) // 부모 엔티티가 삭제되면 자식 엔티티도 삭제
     private VocaListEntity vocaListEntity;
 
+    @Version
+    private Long version;
 
 //    생성자
     public VocaContentEntity(String text, String transtext, String sampleSentence, VocaListEntity vocaListEntity) {
@@ -40,10 +43,6 @@ public class VocaContentEntity { //단어 내용
         this.transtext = transtext;
         this.sampleSentence = sampleSentence;
         this.vocaListEntity = vocaListEntity;
-    }
-
-    public VocaContentEntity() {
-
     }
 
 
