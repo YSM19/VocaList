@@ -25,7 +25,7 @@ public class QuizEntity {
     private Date date;
 
     @Schema(description = "단어장 참조값")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
