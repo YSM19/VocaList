@@ -85,7 +85,7 @@ public class VocaService {
 
     // 가져간 단어장 count 증가
     public void addCount(Long uservocalistId) {
-        UserVocaListEntity userVocaListEntity = findUserVocaListById(uservocalistId);
+        UserVocaListEntity userVocaListEntity = userVocaListRepository.findById(uservocalistId).orElse(null);
         Long vocalistId = userVocaListEntity.getVocaListEntity().getId();
 
         VocaListEntity vocaListEntity = findVocaListById(vocalistId);
@@ -188,9 +188,9 @@ public class VocaService {
         return userVocaListRepository.findByUserEntityEmail(userEmail);
     }
 
-    public UserVocaListEntity findUserVocaListById(Long uservocalistId){
-        return userVocaListRepository.findUserVocaListEntityById(uservocalistId);
-    }
+//    public UserVocaListEntity findUserVocaListById(Long uservocalistId){
+//        return userVocaListRepository.findById(uservocalistId);
+//    }
 
 //    public UserVocaListEntity getUserVocaListId(Long title){
 //        return userVocaListRepository.findByVocaListEntityId(title);
