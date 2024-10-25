@@ -27,7 +27,7 @@ public class QuizEntity {
 
     @Schema(description = "단어장 참조값")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 

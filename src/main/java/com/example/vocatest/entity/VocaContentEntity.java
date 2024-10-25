@@ -28,7 +28,7 @@ public class VocaContentEntity { //단어 내용
 
     @Schema(description = "단어장 참조값")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vocalist_id")
     @OnDelete(action = OnDeleteAction.CASCADE) // 부모 엔티티가 삭제되면 자식 엔티티도 삭제
     private VocaListEntity vocaListEntity;
