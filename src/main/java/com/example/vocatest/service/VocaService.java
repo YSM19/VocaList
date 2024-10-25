@@ -83,6 +83,17 @@ public class VocaService {
         vocaListRepository.delete(vocaListEntity);
     }
 
+    // 가져간 단어장 count 증가
+    public void addCount(Long uservocalistId) {
+        UserVocaListEntity userVocaListEntity = findUserVocaListById(uservocalistId);
+        Long vocalistId = userVocaListEntity.getVocaListEntity().getId();
+
+        VocaListEntity vocaListEntity = findVocaListById(vocalistId);
+        if (vocaListEntity != null) {
+            vocaListEntity.setCount(vocaListEntity.getCount() + 1);
+        }
+    }
+
     //    --------------------------단어 내용 메소드------------------------
     // create
     public VocaContentEntity createVocaContent(Long vocaListId, VocaContentDto vocaContentDto){
@@ -177,6 +188,9 @@ public class VocaService {
         return userVocaListRepository.findByUserEntityEmail(userEmail);
     }
 
+    public UserVocaListEntity findUserVocaListById(Long uservocalistId){
+        return userVocaListRepository.findUserVocaListEntityByUservocalistId(uservocalistId);
+    }
 
 //    public UserVocaListEntity getUserVocaListId(Long title){
 //        return userVocaListRepository.findByVocaListEntityId(title);

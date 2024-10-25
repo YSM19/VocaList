@@ -44,8 +44,8 @@ public class VocaListEntity { //단어장 목록
         this.count = count;
     }
 
-    public void addCount(Long count){
-        this.count += count;
-    }
+//    public void addCount(Long count){
+//        this.count += count;
+//    }
 
 }
