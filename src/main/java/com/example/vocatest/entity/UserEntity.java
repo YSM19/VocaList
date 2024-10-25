@@ -2,12 +2,15 @@ package com.example.vocatest.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
@@ -27,4 +30,5 @@ public class UserEntity {
 
     @Schema(description = "유저 Total 스코어", example = "10")
     private int totalScore;
+
 }

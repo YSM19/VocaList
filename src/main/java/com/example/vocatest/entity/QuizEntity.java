@@ -3,6 +3,7 @@ package com.example.vocatest.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class QuizEntity {
 
     @Id
@@ -33,12 +35,5 @@ public class QuizEntity {
 
     @Version
     private Long version;
-
-    public QuizEntity(String email, int score, Date date, VocaListEntity vocaListEntity) {
-        this.email = email;
-        this.score = score;
-        this.date = date;
-        this.vocaListEntity = vocaListEntity;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.example.vocatest.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class VocaContentEntity { //단어 내용
 
     @Id
@@ -36,14 +38,5 @@ public class VocaContentEntity { //단어 내용
 
     @Version
     private Long version;
-
-//    생성자
-    public VocaContentEntity(String text, String transtext, String sampleSentence, VocaListEntity vocaListEntity) {
-        this.text = text;
-        this.transtext = transtext;
-        this.sampleSentence = sampleSentence;
-        this.vocaListEntity = vocaListEntity;
-    }
-
 
 }
