@@ -37,7 +37,7 @@ public class UserVocalistController implements UserVocaListControllerDocs {
 
         try {
             UserVocaListEntity userVocaListEntity = vocaService.createUserVocaList(email, uservocalistId);
-//            vocaService.addCount(uservocalistId);
+            vocaService.addCount(uservocalistId);
             return ResponseEntity.status(HttpStatus.CREATED).body(userVocaListEntity);
         } catch (IllegalArgumentException e) {
             log.info(e.getMessage());
