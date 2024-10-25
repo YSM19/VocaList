@@ -183,7 +183,7 @@ public class VocaService {
     }
 
     // read
-    @Transactional
+    @Transactional(readOnly = true)
     public List<UserVocaListEntity> getUserVocaList(String userEmail){
         return userVocaListRepository.findByUserEntityEmail(userEmail);
     }
