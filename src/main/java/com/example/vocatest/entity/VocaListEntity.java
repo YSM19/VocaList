@@ -2,7 +2,6 @@ package com.example.vocatest.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class VocaListEntity { //단어장 목록
 
     @Id
@@ -34,5 +32,14 @@ public class VocaListEntity { //단어장 목록
 
     @Version
     private Long version;
+
+
+    public VocaListEntity(String email, String username, String title, int secret, Long count) {
+        this.email = email;
+        this.username = username;
+        this.title = title;
+        this.secret = secret;
+        this.count = count;
+    }
 
 }

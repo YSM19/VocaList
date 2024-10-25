@@ -32,4 +32,5 @@ public class UserVocaListEntity { //유저가 가지고 있는 단어장
     private Long version;
 
 
+
 }
