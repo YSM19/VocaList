@@ -106,7 +106,7 @@ public class VocaService {
     }
 
     // read
-//    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<VocaContentEntity> findAllVocasByVocaListId(Long vocaListId) {
         return vocaContentRepository.findByVocaListEntityId(vocaListId);
     }
@@ -183,7 +183,7 @@ public class VocaService {
     }
 
     // read
-//    @Transactional
+    @Transactional
     public List<UserVocaListEntity> getUserVocaList(String userEmail){
         return userVocaListRepository.findByUserEntityEmail(userEmail);
     }
