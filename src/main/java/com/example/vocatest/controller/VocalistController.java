@@ -23,7 +23,6 @@ public class VocalistController implements VocaListControllerDocs { // 단어장
 
     private final VocaService vocaService;
 
-    @Transactional
     @GetMapping("/showall")
     public ResponseEntity<List<VocaListEntity>> findAllVocaList(){ // secret이 1인 단어장의 모든 리스트를 보여주기
 //        List<VocaListEntity> vocaListEntity = vocaService.findAllVocaList();
