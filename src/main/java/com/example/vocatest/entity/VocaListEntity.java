@@ -15,8 +15,8 @@ public class VocaListEntity { //단어장 목록
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema(description = "단어장 작성한 자지 이메일", example = "xxxx@gmail.com")
-    private String email; // 단어장 작성한 자지 이메일
+    @Schema(description = "단어장 작성한 저자 이메일", example = "xxxx@gmail.com")
+    private String email; // 단어장 작성한 저자 이메일
 
     @Schema(description = "단어장 저자", example = "김길똥")
     private String username; // 단어장의 작성자
