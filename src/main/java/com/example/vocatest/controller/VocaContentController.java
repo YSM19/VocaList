@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,18 +21,51 @@ public class VocaContentController implements VocaContentControllerDocs { // 단
 
     // create
     @PostMapping("/create/{vocalistId}")
-    public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("vocalistId") Long vocalistId,
-                                                            @RequestBody VocaContentDto vocaContentDto){ // 단어장에 단어 등록
-
+    public ResponseEntity<VocaContentDto> addVocaContent(@PathVariable("vocalistId") Long vocalistId,
+                                                            @RequestBody VocaContentDto vocaContentDto) { // 단어장에 단어 등록
         VocaContentEntity vocaContentEntity = vocaService.createVocaContent(vocalistId, vocaContentDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(vocaContentEntity);
+        
+        VocaContentDto responseDto = new VocaContentDto();
+        responseDto.setText(vocaContentEntity.getText());
+        responseDto.setTranstext(vocaContentEntity.getTranstext());
+        responseDto.setSampleSentence(vocaContentEntity.getSampleSentence());
+        responseDto.setVocaListId(vocaContentEntity.getVocaListEntity().getId()); // Assuming you want to return the ID
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     // read
     @GetMapping("/showall/{vocalistId}")
-    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId) { //단어장에 있는 모든 단어 조회
+    public ResponseEntity<List<VocaContentDto>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId) { //단어장에 있는 모든 단어 조회
         List<VocaContentEntity> vocas = vocaService.findAllVocasByVocaListId(vocalistId);
-        return ResponseEntity.ok().body(vocas);
+        
+        List<VocaContentDto> responseDtos = new ArrayList<>();
+        for (VocaContentEntity entity : vocas) {
+            VocaContentDto dto = new VocaContentDto();
+            dto.setText(entity.getText());
+            dto.setTranstext(entity.getTranstext());
+            dto.setSampleSentence(entity.getSampleSentence());
+            dto.setVocaListId(entity.getVocaListEntity().getId());
+            responseDtos.add(dto);
+        }
+
+        return ResponseEntity.ok().body(responseDtos);
+    }
+
+    // 단어 전체 read
+    @GetMapping("/showall/all")
+    public ResponseEntity<List<VocaContentDto>> getAllVocaContents() {
+        List<VocaContentEntity> allContents = vocaService.findAllContents();
+        List<VocaContentDto> responseDtos = new ArrayList<>();
+        for (VocaContentEntity entity : allContents) {
+            VocaContentDto dto = new VocaContentDto();
+            dto.setText(entity.getText());
+            dto.setTranstext(entity.getTranstext());
+            dto.setSampleSentence(entity.getSampleSentence());
+            dto.setVocaListId(entity.getVocaListEntity().getId());
+            responseDtos.add(dto);
+        }
+        return ResponseEntity.ok(responseDtos);
     }
 
 //    @GetMapping("/show/{vocalistId}/{wordid}")// 특정 단어 조회

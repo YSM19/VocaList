@@ -1,6 +1,5 @@
 package com.example.vocatest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,7 +25,6 @@ public class QuizEntity {
     private Date date;
 
     @Schema(description = "단어장 참조값")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;

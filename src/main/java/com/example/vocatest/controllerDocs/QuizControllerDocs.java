@@ -38,7 +38,7 @@ public interface QuizControllerDocs {
             @ApiResponse(responseCode = "200", description = "푼 퀴즈개수 저장 성공"),
             @ApiResponse(responseCode = "400", description = "푼 퀴즈개수 저장 실패")
     })
-    public ResponseEntity<QuizEntity> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
+    public ResponseEntity<QuizDTO> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
                                                     @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                                                     @RequestBody QuizDTO quizDTO);
 

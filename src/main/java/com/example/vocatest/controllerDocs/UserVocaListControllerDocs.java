@@ -1,6 +1,7 @@
 package com.example.vocatest.controllerDocs;
 
 import com.example.vocatest.dto.CustomOAuth2User;
+import com.example.vocatest.dto.UserVocaListDto;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.swagger.ApiCommonResponse;
@@ -30,7 +31,7 @@ public interface UserVocaListControllerDocs {
             @ApiResponse(responseCode = "400", description = "사용자의 단어장 조회 실패")
     })
     @GetMapping()
-    public ResponseEntity<List<UserVocaListEntity>> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
+    public ResponseEntity<List<UserVocaListDto>> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User);
 
     @Parameters(value = {
             @Parameter(name = "uservocalistId", description = "사용자의 단어장 id 값"),

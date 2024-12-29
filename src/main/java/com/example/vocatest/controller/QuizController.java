@@ -45,15 +45,19 @@ public class QuizController implements QuizControllerDocs {
     }
 
     @PostMapping("/history/{vocalistId}")
-    public ResponseEntity<QuizEntity> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
-                                                          @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
-                                                          @RequestBody QuizDTO quizDTO) {
-        if (customOAuth2User != null){
+    public ResponseEntity<QuizDTO> saveQuizScore(@PathVariable("vocalistId") Long vocalistId,
+                                                  @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+                                                  @RequestBody QuizDTO quizDTO) {
+        if (customOAuth2User != null) {
             String email = customOAuth2User.getAttribute("email");
             QuizEntity quizEntity = quizService.saveQuizScore(vocalistId, email, quizDTO);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(quizEntity);
-        } else{
+            QuizDTO responseDto = new QuizDTO();
+            responseDto.setScore(quizEntity.getScore());
+            responseDto.setDate(quizEntity.getDate());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        } else {
             log.info("로그인 되어있지 않음.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }

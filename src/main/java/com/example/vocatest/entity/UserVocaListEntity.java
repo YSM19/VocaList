@@ -1,6 +1,5 @@
 package com.example.vocatest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,13 +16,11 @@ public class UserVocaListEntity { //유저가 가지고 있는 단어장
     private Long id;
 
     @Schema(description = "단어장 참조값")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vocalist_id")
     private VocaListEntity vocaListEntity;
 
     @Schema(description = "유저 참조값")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;

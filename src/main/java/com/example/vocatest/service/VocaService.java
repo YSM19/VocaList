@@ -116,6 +116,11 @@ public class VocaService {
         return vocaContentRepository.findById(wordid).orElse(null);
     }
 
+    public List<VocaContentEntity> findAllContents() {
+        return vocaContentRepository.findAll();
+    }
+
+
     // update
     public VocaContentEntity updateVocaContent(Long id, Long wordid, VocaContentDto vocaContentDto){
         VocaContentEntity target = getVocaContentId(wordid);

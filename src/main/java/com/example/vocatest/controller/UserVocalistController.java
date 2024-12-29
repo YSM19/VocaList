@@ -2,6 +2,7 @@ package com.example.vocatest.controller;
 
 import com.example.vocatest.controllerDocs.UserVocaListControllerDocs;
 import com.example.vocatest.dto.CustomOAuth2User;
+import com.example.vocatest.dto.UserVocaListDto;
 import com.example.vocatest.entity.UserVocaListEntity;
 import com.example.vocatest.entity.VocaListEntity;
 import com.example.vocatest.service.VocaService;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @Slf4j
@@ -47,12 +49,22 @@ public class UserVocalistController implements UserVocaListControllerDocs {
     }
 
     @GetMapping() // 유저가 가지고 있는 단어장 보여주기
-    public ResponseEntity<List<UserVocaListEntity>> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+    public ResponseEntity<List<UserVocaListDto>> findUserVocaList(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
             String email = customOAuth2User.getAttribute("email");
             log.info("Logged in as : " + email);
 
-            return ResponseEntity.ok(vocaService.getUserVocaList(email));
+            List<UserVocaListEntity> userVocaLists = vocaService.getUserVocaList(email);
+            List<UserVocaListDto> responseDtos = new ArrayList<>();
+            
+            for (UserVocaListEntity entity : userVocaLists) {
+                UserVocaListDto dto = new UserVocaListDto();
+                dto.setId(entity.getId());
+                dto.setVocaListId(entity.getVocaListEntity().getId());
+                responseDtos.add(dto);
+            }
+
+            return ResponseEntity.ok(responseDtos);
         } else {
             log.info("No user logged in");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

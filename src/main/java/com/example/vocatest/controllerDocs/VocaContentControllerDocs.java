@@ -25,7 +25,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "400", description = "단어 조회 실패")
     })
     @GetMapping("/showall/{vocalistId}")
-    public ResponseEntity<List<VocaContentEntity>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId);
+    public ResponseEntity<List<VocaContentDto>> getAllVocaContentByVocaListId(@PathVariable("vocalistId") Long vocalistId);
 
     @Parameters(value = {
             @Parameter(name = "vocalistId", description = "단어장 id 값"),
@@ -36,7 +36,7 @@ public interface VocaContentControllerDocs {
             @ApiResponse(responseCode = "400", description = "단어 등록 실패")
     })
     @PostMapping("/create/{vocalistId}")
-    public ResponseEntity<VocaContentEntity> addVocaContent(@PathVariable("vocalistId") Long vocalistId, @RequestBody VocaContentDto vocaContentDto);
+    public ResponseEntity<VocaContentDto> addVocaContent(@PathVariable("vocalistId") Long vocalistId, @RequestBody VocaContentDto vocaContentDto);
 
     @Parameters(value = {
             @Parameter(name = "id", description = "단어장 id 값"),
